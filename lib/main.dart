@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -5,109 +6,260 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+    return MyAppPage();
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class MyAppPage extends StatefulWidget {
+  const MyAppPage({Key? key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyAppPageState createState() => _MyAppPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _MyAppPageState extends State<MyAppPage> {
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+  late ScrollController controller;
+  var splashView = false;
+  var page = 0;
+  var offset = 0;
+  var offsetTop = true;
+  var offsetHoho = true;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = ScrollController();
+    controller.addListener(() {
+      offset = controller.offset.toInt();
+
+      if (offset == 0) {
+        setState(() {
+          offsetTop = true;
+        });
+      } else {
+        if (offsetTop == true) {
+          setState(() {
+            offsetTop = false;
+          });
+        }
+      }
+
+      if (offset < 30 && !offsetHoho) {
+        setState(() {
+          offsetHoho = true;
+        });
+      } else if (offset > 30 && offsetHoho) {
+        setState(() {
+          offsetHoho = false;
+        });
+      }
+
+      if (offset <= 1000) {
+        if (page != 0) {
+          setState(() {
+            page = 0;
+          });
+        }
+      } else if (offset <= 2000) {
+        if (page != 1) {
+          setState(() {
+            page = 1;
+          });
+        }
+      } else if (offset <= 3000) {
+        if (page != 2) {
+          setState(() {
+            page = 2;
+          });
+        }
+      }
+    });
+
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      Future.delayed(Duration(milliseconds: 3000), () {
+        setState(() {
+          splashView = false;
+        });
+      });
     });
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    return MaterialApp(
+      theme: ThemeData(
+        // fontFamily: 'NanumGothic'
+        fontFamily: 'Jua'
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+      home: Scaffold(
+          body: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Container(
+                child: ListView(
+                  controller: controller,
+                  children: [
+                    Container(
+                      height: 1000,
+                      // decoration: BoxDecoration(
+                      //     image: DecorationImage(
+                      //         fit: BoxFit.cover,
+                      //         image: AssetImage('assets/images/sky.jpg')
+                      //     )
+                      // ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 80),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Opacity(
+                                  opacity: offsetHoho? 1.0 : 0.0,
+                                  child: Text('hoho\'s portfolio', style: TextStyle(fontSize: 25),)
+                                ),
+                                AnimatedOpacity(
+                                  duration: Duration(milliseconds: 500),
+                                  opacity: offsetTop? 1.0 : 0.0,
+                                  child: Text('jhkkim0114@gmail.com', style: TextStyle(fontSize: 16), textAlign: TextAlign.start,)
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 300,),
+                            Container(
+                              width: 200,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 5,
+                                      color: Colors.black
+                                  ),
+                                  borderRadius: BorderRadius.all(Radius.circular(8.0))
+                              ),
+                              child: Center(
+                                  child: Text('hoho', style: TextStyle(fontSize: 65,fontWeight: FontWeight.bold),)
+                              ),
+                            ),
+                            SizedBox(height: 20,),
+                            Text('Developer KIM JIHO', style: TextStyle(fontSize: 22),),
+                            SizedBox(height: 100,),
+                            Text('안녕하세요.', style: TextStyle(fontSize: 16),),
+                            SizedBox(height: 8,),
+                            Text('Android와 iOS개발을 주로하며 flutter를 사용한 크로스플랫폼 개발도 하고 있습니다.', style: TextStyle(fontSize: 16),),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 1000,
+                      child: Center(
+                        child: Text('About Me'),
+                      ),
+                    ),
+                    Container(
+                      height: 1000,
+                      color: Colors.deepOrange,
+                      child: Center(
+                        child: Text('3 page'),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Opacity(
+                opacity: offsetTop? 0.0 : 1.0,
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  // color: Color(0x55ffffff),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Opacity(
+                          opacity: offsetHoho? 0.0 : 1.0,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 80),
+                            child: Text('hoho\'s portfolio', style: TextStyle(fontSize: 25),),
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 25),
+                        child: TextButton(onPressed: () {
+                          controller.animateTo(0, duration: Duration(seconds: 1), curve: Curves.ease);
+                        }, child:
+                        Text('HOME', style: TextStyle(fontSize: 18, color: page==0? Colors.black: Colors.black26),)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 25),
+                        child: TextButton(onPressed: () {
+                          controller.animateTo(1000, duration: Duration(seconds: 1), curve: Curves.ease);
+                        }, child: Text('ABOUT ME', style: TextStyle(fontSize: 18, color: page==1? Colors.black: Colors.black26),)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 80),
+                        child: TextButton(onPressed: () {
+                          controller.animateTo(2000, duration: Duration(seconds: 1), curve: Curves.ease);
+                        }, child: Text('PORTFOLIO', style: TextStyle(fontSize: 18, color: page==2? Colors.black: Colors.black26),)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              IgnorePointer(
+                child: AnimatedOpacity(
+                  duration: Duration(seconds: 1),
+                  opacity: splashView? 1.0 : 0.0,
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    color: Colors.white,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 50,
+                            child: DefaultTextStyle(
+                              style: const TextStyle(
+                                fontSize: 38,
+                                fontFamily: 'NanumGothic',
+                              ),
+                              child: AnimatedTextKit(
+                                animatedTexts: [
+                                  TypewriterAnimatedText('만나서 반가워요!',
+                                      speed: Duration(milliseconds: 150)),
+                                ],
+                                totalRepeatCount: 1,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          )
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
+
+
