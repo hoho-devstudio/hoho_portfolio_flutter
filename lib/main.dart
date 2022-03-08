@@ -26,20 +26,24 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
 
   late ScrollController controller;
   late TabController tabController;
-  var splashView = false;
+  var splashView = true;
   var page = 0;
   var offset = 0;
   var offsetTop = true;
   var offsetHoho = true;
 
-  var pageHeight = [1000, 370, 1000, 1600];
+  var pageHeight = [900, 420, 1100, 500];
 
   @override
   void initState() {
     super.initState();
     controller = ScrollController(
-      initialScrollOffset: (pageHeight[0] + pageHeight[1] + pageHeight[2]).toDouble()
+      // initialScrollOffset: (pageHeight[0] + pageHeight[1] + pageHeight[2]).toDouble()
     );
+    tabController = TabController(
+        length: 7, vsync: this, initialIndex: 0
+    );
+
     controller.addListener(() {
       offset = controller.offset.toInt();
 
@@ -92,8 +96,6 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
       }
     });
 
-    tabController = TabController(length: 7, vsync: this, initialIndex: 0);
-
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       Future.delayed(Duration(milliseconds: 3000), () {
         setState(() {
@@ -113,7 +115,6 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        // fontFamily: 'NanumGothic'
         fontFamily: 'Jua'
       ),
       home: Scaffold(
@@ -139,10 +140,23 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                   opacity: offsetHoho? 1.0 : 0.0,
                                   child: Text('hoho\'s portfolio', style: TextStyle(fontSize: 25),)
                                 ),
-                                AnimatedOpacity(
+                                splashView? Container() : AnimatedOpacity(
                                   duration: Duration(milliseconds: 500),
                                   opacity: offsetTop? 1.0 : 0.0,
-                                  child: Text('jhkkim0114@gmail.com', style: TextStyle(fontSize: 16), textAlign: TextAlign.start,)
+                                  // child: Text('hoho.devstudio@gmail.com', style: TextStyle(fontSize: 16), textAlign: TextAlign.start,)
+                                  child: DefaultTextStyle(
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Jua',
+                                    ),
+                                    textAlign: TextAlign.start,
+                                    child: AnimatedTextKit(
+                                      animatedTexts: [
+                                        WavyAnimatedText('hoho.devstudio@gmail.com'),
+                                      ],
+                                      isRepeatingAnimation: true,
+                                    ),
+                                  )
                                 ),
                               ],
                             ),
@@ -195,9 +209,9 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                        fit: BoxFit.fitHeight,
+                                        fit: BoxFit.fitWidth,
                                         image: AssetImage(
-                                            'assets/images/jiho.jpg'
+                                            'assets/images/jiho_2.jpg'
                                         )
                                     )
                                 ),
@@ -584,36 +598,122 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                       ],
                                     ),
                                     Spacer(),
-                                    Row(
-                                      children: [
-                                        Spacer(),
-                                        Padding(
-                                          padding: const EdgeInsets.only(right: 20),
-                                          child: Image(image: AssetImage('assets/images/mesa_7.png'), width: 500,),
-                                        ),
-                                      ],
-                                    ),
+                                    Image(image: AssetImage('assets/images/mesa_7.png'), height: 230,),
                                     SizedBox(height: 10,),
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
-                                        Image(image: AssetImage('assets/images/mesa_2.png'), width: 180,),
+                                        Image(image: AssetImage('assets/images/mesa_2.png'), width: 230,),
                                         SizedBox(width: 10,),
-                                        Image(image: AssetImage('assets/images/mesa_3.png'), width: 180,),
+                                        Image(image: AssetImage('assets/images/mesa_3.png'), width: 230,),
                                         SizedBox(width: 10,),
-                                        Image(image: AssetImage('assets/images/mesa_4.png'), width: 180,),
+                                        Image(image: AssetImage('assets/images/mesa_4.png'), width: 230,),
                                         SizedBox(width: 10,),
-                                        Image(image: AssetImage('assets/images/mesa_5.png'), width: 180,),
-                                        SizedBox(width: 10,),
-                                        Image(image: AssetImage('assets/images/mesa_6.png'), width: 180,),
+                                        Image(image: AssetImage('assets/images/mesa_5.png'), width: 230,),
+                                        // SizedBox(width: 10,),
+                                        // Image(image: AssetImage('assets/images/mesa_6.png'), width: 230,),
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
                               Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Image(image: AssetImage('assets/images/windmat_icon.png'), width: 100, height: 100,),
+                                        SizedBox(width: 30,),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text('👉  WINDMAT 안드로이드 개발', style: TextStyle(fontSize: 16),),
+                                            SizedBox(height: 5,),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 28),
+                                              child: Text('크로스팬 블루투스 원격제어 리모트컨트롤 기능 개발', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    Image(image: AssetImage('assets/images/windmat_4.png'), height: 230,),
+                                    SizedBox(height: 10,),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(width: 0.4, color: Colors.grey)
+                                          ), 
+                                            child: Image(image: AssetImage('assets/images/windmat_1.png'), width: 230,)
+                                        ),
+                                        SizedBox(width: 10,),
+                                        Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(width: 0.4, color: Colors.grey)
+                                            ),
+                                            child: Image(image: AssetImage('assets/images/windmat_2.png'), width: 230,)
+                                        ),
+                                        SizedBox(width: 10,),
+                                        Container(
+                                            child: Image(image: AssetImage('assets/images/windmat_3.png'), width: 230,)
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                               Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Image(image: AssetImage('assets/images/mexpo_icon.png'), width: 100, height: 100,),
+                                        SizedBox(width: 30,),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text('👉  MEXPO 안드로이드 개발', style: TextStyle(fontSize: 16),),
+                                            SizedBox(height: 5,),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 28),
+                                              child: Text('모바일엑스포 네이티브 앱으로 전시회 업체의 입점, 결제, 홍보 등의 기능 개발', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            ),
+                                            SizedBox(height: 20,),
+                                            Text('👉  MEXPO 서버(Spring Framework) 개발', style: TextStyle(fontSize: 16),),
+                                            SizedBox(height: 5,),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 28),
+                                              child: Text('MSSQL DB연동 모바일 API 개발', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    Image(image: AssetImage('assets/images/mexpo_6.png'), height: 230,),
+                                    SizedBox(height: 10,),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Image(image: AssetImage('assets/images/mexpo_1.png'), width: 230,),
+                                        SizedBox(width: 10,),
+                                        Image(image: AssetImage('assets/images/mexpo_2.png'), width: 230,),
+                                        SizedBox(width: 10,),
+                                        Image(image: AssetImage('assets/images/mexpo_3.png'), width: 230,),
+                                        SizedBox(width: 10,),
+                                        Image(image: AssetImage('assets/images/mexpo_4.png'), width: 230,),
+                                        // SizedBox(width: 10,),
+                                        // Image(image: AssetImage('assets/images/mesa_6.png'), width: 230,),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                             controller: tabController,),
@@ -622,86 +722,30 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 60),
                       height: pageHeight[3].toDouble(),
-                      color: Color(0x10000000),
-                      child: Row(
+                      color: Color(0xfff9f9f9),
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Stack(
-                            children: [
-                              Container(
-                                width: 230,
-                                height: 230,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white
-                                ),
-                              ),
-                              Container(
-                                width: 230,
-                                height: 230,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        fit: BoxFit.fitHeight,
-                                        image: AssetImage(
-                                            'assets/images/jiho.jpg'
-                                        )
-                                    )
-                                ),
-                              ),
-                            ],
+                          SizedBox(height: 70),
+                          Text('💌  함께 나누고 싶은 얘기가 있으시다면', style: TextStyle(fontSize: 22)),
+                          SizedBox(height: 60),
+                          Text('hoho.devstudio@gmail.com', style: TextStyle(fontSize: 62)),
+                          SizedBox(height: 20),
+                          Text('어떤 내용이여도 좋아요! 메일을 보내주시면 답장을 드릴게요.', style: TextStyle(fontSize: 16, color: Colors.black26)),
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 30, right: 40),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Text('© 2022 hoho studio', style: TextStyle(color: Colors.grey),),
+                                Container(
+                                  alignment: Alignment.centerRight,
+                                    child: Text('Made By hoho with 💛💛💛')),
+                              ],
+                            ),
                           ),
-                          SizedBox(width: 40,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 10,),
-                              Text('9년차 모바일 개발자 🧑💻', style: TextStyle(fontSize: 20),),
-                              SizedBox(height: 10,),
-                              Text('김지호', style: TextStyle(fontSize: 20),),
-                              SizedBox(height: 10,),
-                              Container(
-                                width: 250,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 1,
-                                        color: Color(0x11000000)
-                                    )
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(width: 30,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 44,),
-                              Text('이력', style: TextStyle(fontSize: 20),),
-                              SizedBox(height: 10,),
-                              Container(
-                                width: 350,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 1,
-                                        color: Color(0x11000000)
-                                    )
-                                ),
-                              ),
-                              SizedBox(height: 20,),
-                              Text('현) NICE비즈니스플랫폼 - Android, iOS 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
-                              SizedBox(height: 10,),
-                              Text('전) NICE평가정보(파견) - Android 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
-                              SizedBox(height: 10,),
-                              Text('전) 와이즈인프라코어 - Android 리드 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
-                              SizedBox(height: 10,),
-                              Text('전) 브레닉스 - Android 리드 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
-                              SizedBox(height: 10,),
-                              Text('전) 팬텍(파견) - 임베디드SW개발 연구원', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
-                            ],
-                          )
                         ],
                       ),
                     ),
