@@ -32,13 +32,13 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
   var offsetTop = true;
   var offsetHoho = true;
 
-  var pageHeight = [1000, 370, 1600];
+  var pageHeight = [1000, 370, 1000, 1600];
 
   @override
   void initState() {
     super.initState();
     controller = ScrollController(
-      initialScrollOffset: (pageHeight[0] + pageHeight[1]).toDouble()
+      initialScrollOffset: (pageHeight[0] + pageHeight[1] + pageHeight[2]).toDouble()
     );
     controller.addListener(() {
       offset = controller.offset.toInt();
@@ -83,10 +83,16 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
             page = 2;
           });
         }
+      } else if (offset < pageHeight[0] + pageHeight[1] + pageHeight[2] + pageHeight[3]) {
+        if (page != 3) {
+          setState(() {
+            page = 3;
+          });
+        }
       }
     });
 
-    tabController = TabController(length: 7, vsync: this, initialIndex: 4);
+    tabController = TabController(length: 7, vsync: this, initialIndex: 0);
 
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       Future.delayed(Duration(milliseconds: 3000), () {
@@ -578,7 +584,15 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                       ],
                                     ),
                                     Spacer(),
-                                    Image(image: AssetImage('assets/images/mesa_7.png'), width: 500,),
+                                    Row(
+                                      children: [
+                                        Spacer(),
+                                        Padding(
+                                          padding: const EdgeInsets.only(right: 20),
+                                          child: Image(image: AssetImage('assets/images/mesa_7.png'), width: 500,),
+                                        ),
+                                      ],
+                                    ),
                                     SizedBox(height: 10,),
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -606,7 +620,91 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                           )
                         ],
                       ),
-                    )
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 60),
+                      height: pageHeight[3].toDouble(),
+                      color: Color(0x10000000),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              Container(
+                                width: 230,
+                                height: 230,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white
+                                ),
+                              ),
+                              Container(
+                                width: 230,
+                                height: 230,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        fit: BoxFit.fitHeight,
+                                        image: AssetImage(
+                                            'assets/images/jiho.jpg'
+                                        )
+                                    )
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: 40,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 10,),
+                              Text('9년차 모바일 개발자 🧑💻', style: TextStyle(fontSize: 20),),
+                              SizedBox(height: 10,),
+                              Text('김지호', style: TextStyle(fontSize: 20),),
+                              SizedBox(height: 10,),
+                              Container(
+                                width: 250,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1,
+                                        color: Color(0x11000000)
+                                    )
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(width: 30,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 44,),
+                              Text('이력', style: TextStyle(fontSize: 20),),
+                              SizedBox(height: 10,),
+                              Container(
+                                width: 350,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1,
+                                        color: Color(0x11000000)
+                                    )
+                                ),
+                              ),
+                              SizedBox(height: 20,),
+                              Text('현) NICE비즈니스플랫폼 - Android, iOS 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
+                              SizedBox(height: 10,),
+                              Text('전) NICE평가정보(파견) - Android 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
+                              SizedBox(height: 10,),
+                              Text('전) 와이즈인프라코어 - Android 리드 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
+                              SizedBox(height: 10,),
+                              Text('전) 브레닉스 - Android 리드 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
+                              SizedBox(height: 10,),
+                              Text('전) 팬텍(파견) - 임베디드SW개발 연구원', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -633,8 +731,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                         padding: const EdgeInsets.only(right: 25),
                         child: TextButton(onPressed: () {
                           controller.animateTo(0, duration: Duration(seconds: 1), curve: Curves.ease);
-                        }, child:
-                        Text('HOME', style: TextStyle(fontSize: 18, color: page==0? Colors.black: Colors.black26),)),
+                        }, child: Text('HOME', style: TextStyle(fontSize: 18, color: page==0? Colors.black: Colors.black26),)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 25),
@@ -643,10 +740,16 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                         }, child: Text('ABOUT ME', style: TextStyle(fontSize: 18, color: page==1? Colors.black: Colors.black26),)),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 80),
+                        padding: const EdgeInsets.only(right: 25),
                         child: TextButton(onPressed: () {
                           controller.animateTo((pageHeight[0]+pageHeight[1].toDouble()), duration: Duration(seconds: 1), curve: Curves.ease);
                         }, child: Text('PROJECT', style: TextStyle(fontSize: 18, color: page==2? Colors.black: Colors.black26),)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 80),
+                        child: TextButton(onPressed: () {
+                          controller.animateTo((pageHeight[0]+pageHeight[1]+pageHeight[2].toDouble()), duration: Duration(seconds: 1), curve: Curves.ease);
+                        }, child: Text('CONTACT', style: TextStyle(fontSize: 18, color: page==3? Colors.black: Colors.black26),)),
                       ),
                     ],
                   ),
