@@ -264,7 +264,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                               SizedBox(height: 10,),
                               Text('전) 브레닉스 - Android 리드 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
                               SizedBox(height: 10,),
-                              Text('전) 팬텍(파견) - 임베디드SW개발 연구원', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
+                              Text('전) 팬텍(파견) - 모바일 FW개발 연구원', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
                             ],
                           )
                         ],
@@ -817,7 +817,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                           child: DefaultTextStyle(
                             style: const TextStyle(
                               fontSize: 38,
-                              fontFamily: 'Jua',
+                              fontFamily: 'NanumGothic',
                               color: Colors.black
                             ),
                             child: AnimatedTextKit(
