@@ -27,6 +27,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
   late ScrollController controller;
   late TabController tabController;
   var splashView = true;
+  var textView = true;
   var page = 0;
   var offset = 0;
   var offsetTop = true;
@@ -97,7 +98,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
     });
 
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      Future.delayed(Duration(milliseconds: 3000), () {
+      Future.delayed(Duration(milliseconds: 5000), () {
         setState(() {
           splashView = false;
         });
@@ -143,11 +144,11 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                 splashView? Container() : AnimatedOpacity(
                                   duration: Duration(milliseconds: 500),
                                   opacity: offsetTop? 1.0 : 0.0,
-                                  // child: Text('hoho.devstudio@gmail.com', style: TextStyle(fontSize: 16), textAlign: TextAlign.start,)
                                   child: DefaultTextStyle(
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Jua',
+                                      color: Colors.black
                                     ),
                                     textAlign: TextAlign.start,
                                     child: AnimatedTextKit(
@@ -211,7 +212,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                     image: DecorationImage(
                                         fit: BoxFit.fitWidth,
                                         image: AssetImage(
-                                            'assets/images/jiho_2.jpg'
+                                            'assets/images/jiho.jpg'
                                         )
                                     )
                                 ),
@@ -807,27 +808,32 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                     width: double.infinity,
                     height: double.infinity,
                     color: Colors.white,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 50,
-                            child: DefaultTextStyle(
-                              style: const TextStyle(
-                                fontSize: 38,
-                                fontFamily: 'NanumGothic',
-                              ),
-                              child: AnimatedTextKit(
-                                animatedTexts: [
-                                  TypewriterAnimatedText('만나서 반가워요!',
-                                      speed: Duration(milliseconds: 150)),
-                                ],
-                                totalRepeatCount: 1,
-                              ),
+                    child: AnimatedOpacity(
+                      duration: Duration(seconds: 1),
+                      opacity: textView? 1.0 : 0.0,
+                      child: Center(
+                        child: SizedBox(
+                          height: 50,
+                          child: DefaultTextStyle(
+                            style: const TextStyle(
+                              fontSize: 38,
+                              fontFamily: 'Jua',
+                              color: Colors.black
+                            ),
+                            child: AnimatedTextKit(
+                              animatedTexts: [
+                                TypewriterAnimatedText('만나서 반가워요!',
+                                    speed: Duration(milliseconds: 150)),
+                              ],
+                              totalRepeatCount: 1,
+                              onFinished: () {
+                                setState(() {
+                                  textView = false;
+                                });
+                              },
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
