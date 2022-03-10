@@ -32,8 +32,25 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
   var offset = 0;
   var offsetTop = true;
   var offsetHoho = true;
+  var turns = 0.0;
 
   var pageHeight = [900, 420, 1100, 500];
+
+  void _changeRotation() {
+    if (turns > 0.125) {
+      setState(() {
+        turns = 0.03;
+      });
+    } else if (turns == 0.125) {
+      setState(() {
+        turns = 0.126;
+      });
+    } else {
+      setState(() {
+        turns = 0.125;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -101,6 +118,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
       Future.delayed(Duration(milliseconds: 5000), () {
         setState(() {
           splashView = false;
+          _changeRotation();
         });
       });
     });
@@ -179,7 +197,19 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                             SizedBox(height: 20,),
                             Text('Developer KIM JIHO', style: TextStyle(fontSize: 22),),
                             SizedBox(height: 100,),
-                            Text('안녕하세요 👋', style: TextStyle(fontSize: 16),),
+                            Center(
+                              child: Row(
+                                children: [
+                                  Text('안녕하세요  ', style: TextStyle(fontSize: 16),),
+                                  AnimatedRotation(
+                                    turns: turns,
+                                    duration: Duration(milliseconds: 500),
+                                    child: Text('👋', style: TextStyle(fontSize: 24),),
+                                    onEnd: _changeRotation,
+                                  ),
+                                ],
+                              ),
+                            ),
                             SizedBox(height: 8,),
                             Text('Android와 iOS개발을 주로하며 flutter를 사용한 크로스플랫폼 개발도 하고 있습니다.', style: TextStyle(fontSize: 16),),
                           ],
