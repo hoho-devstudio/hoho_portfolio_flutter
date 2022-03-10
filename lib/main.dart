@@ -32,22 +32,28 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
   var offset = 0;
   var offsetTop = true;
   var offsetHoho = true;
-  var turns = 0.0;
+  var turns = -0.02;
 
   var pageHeight = [900, 420, 1100, 500];
 
+  var count = 0;
   void _changeRotation() {
-    if (turns > 0.125) {
-      setState(() {
-        turns = 0.03;
+    if (count > 3) {
+      count = 0;
+      Future.delayed(Duration(seconds: 2), () {
+        _changeRotation();
       });
-    } else if (turns == 0.125) {
+      return;
+    }
+    count++;
+
+    if (turns == 0.045) {
       setState(() {
-        turns = 0.126;
+        turns = -0.02;
       });
     } else {
       setState(() {
-        turns = 0.125;
+        turns = 0.045;
       });
     }
   }
@@ -127,6 +133,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     controller.dispose();
+    tabController.dispose();
     super.dispose();
   }
 
@@ -195,20 +202,39 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                               ),
                             ),
                             SizedBox(height: 20,),
+                            // AnimatedTextKit(
+                            //   animatedTexts: [
+                            //     ColorizeAnimatedText(
+                            //       'Developer KIM JIHO',
+                            //       textStyle: TextStyle(
+                            //         fontSize: 22.0,
+                            //         fontFamily: 'Jua',
+                            //       ),
+                            //       colors: [
+                            //         Colors.black,
+                            //         Colors.purple,
+                            //         Colors.blue,
+                            //         Colors.yellow,
+                            //         Colors.red,
+                            //       ],
+                            //     ),
+                            //   ],
+                            //   isRepeatingAnimation: true,
+                            // ),
                             Text('Developer KIM JIHO', style: TextStyle(fontSize: 22),),
                             SizedBox(height: 100,),
-                            Center(
-                              child: Row(
-                                children: [
-                                  Text('안녕하세요  ', style: TextStyle(fontSize: 16),),
-                                  AnimatedRotation(
-                                    turns: turns,
-                                    duration: Duration(milliseconds: 500),
-                                    child: Text('👋', style: TextStyle(fontSize: 24),),
-                                    onEnd: _changeRotation,
-                                  ),
-                                ],
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text('안녕하세요 ', style: TextStyle(fontSize: 16),),
+                                AnimatedRotation(
+                                  turns: turns,
+                                  duration: Duration(milliseconds: 160),
+                                  child: Text('👋', style: TextStyle(fontSize: 24),),
+                                  onEnd: _changeRotation,
+                                ),
+                              ],
                             ),
                             SizedBox(height: 8,),
                             Text('Android와 iOS개발을 주로하며 flutter를 사용한 크로스플랫폼 개발도 하고 있습니다.', style: TextStyle(fontSize: 16),),
