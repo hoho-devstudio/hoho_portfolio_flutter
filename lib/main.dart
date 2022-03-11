@@ -32,7 +32,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
   var offset = 0;
   var offsetTop = true;
   var offsetHoho = true;
-  var turns = -0.02;
+  var turns = 0.0;
 
   var pageHeight = [900, 420, 1100, 500];
 
@@ -49,7 +49,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
 
     if (turns == 0.045) {
       setState(() {
-        turns = -0.02;
+        turns = 0.0;
       });
     } else {
       setState(() {
