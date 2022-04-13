@@ -9,6 +9,10 @@ class MainController extends GetxController with GetSingleTickerProviderStateMix
   var pageHeight = [900, 420, 1100, 1000, 500];
   var offset = 0;
 
+  var _isStarted = false.obs;
+  get isStarted => this._isStarted.value;
+  set isStarted(value) => this._isStarted.value = value;
+
   var _page = 0.obs;
   get page => this._page.value;
   set page(value) => this._page.value = value;
@@ -91,6 +95,12 @@ class MainController extends GetxController with GetSingleTickerProviderStateMix
         }
       }
     });
+
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      isStarted = true;
+      changeRotation();
+    });
+
     super.onInit();
   }
 

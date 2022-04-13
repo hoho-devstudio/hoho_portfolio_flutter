@@ -15,25 +15,31 @@ class MainView extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Container(
-              color: Colors.white,
-              child: ListView(
-                controller: controller.scrollerController,
-                children: [
-                  MainViewHomeWidget(),
-                  MainViewAboutMeWidget(),
-                  MainViewProjectWidget(),
-                  MainViewKakaoBankWidget(),
-                  MainViewContactWidget(),
-                ],
-              ),
+        body: Obx(() {
+          return AnimatedOpacity(
+            duration: const Duration(milliseconds: 1000),
+            opacity: controller.isStarted? 1.0 : 0.0,
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Container(
+                  color: Colors.white,
+                  child: ListView(
+                    controller: controller.scrollerController,
+                    children: [
+                      MainViewHomeWidget(),
+                      MainViewAboutMeWidget(),
+                      MainViewProjectWidget(),
+                      MainViewKakaoBankWidget(),
+                      MainViewContactWidget(),
+                    ],
+                  ),
+                ),
+                MainViewTopWidget()
+              ],
             ),
-            MainViewTopWidget()
-          ],
-        )
+          );
+        })
     );
   }
 
