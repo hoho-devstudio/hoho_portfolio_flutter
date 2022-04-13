@@ -6,11 +6,10 @@ import 'app/ui/theme/app_theme.dart';
 
 void main() {
   runApp(GetMaterialApp(
-    initialRoute: Routes.main,
-    // initialRoute: Routes.login,
+    initialRoute: Routes.splash,
     debugShowCheckedModeBanner: false,
     theme: appThemeData,
-    defaultTransition: Transition.fade,
+    defaultTransition: Transition.fadeIn,
     getPages: AppPages.pages,
   ));
 }

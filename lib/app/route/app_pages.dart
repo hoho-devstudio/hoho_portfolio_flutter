@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:hoho_portfolio_flutter/app/binding/main_binding.dart';
+import 'package:hoho_portfolio_flutter/app/binding/splash_binding.dart';
 
 import '../dev/ground_view.dart';
 import '../ui/view/main_view.dart';
@@ -12,7 +14,7 @@ class AppPages {
     GetPage(name: Routes.initial, page: () => GroundView()),
 
     /// release
-    GetPage(name: Routes.splash, page: () => SplashView()),
-    GetPage(name: Routes.main, page: () => MainView()),
+    GetPage(name: Routes.splash, page: () => SplashView(), binding: SplashBinding()),
+    GetPage(name: Routes.main, page: () => MainView(), binding: MainBinding()),
   ];
 }
