@@ -9,9 +9,13 @@ class MainController extends GetxController with GetSingleTickerProviderStateMix
   var pageHeight = [900, 420, 1100, 1000, 500];
   var offset = 0;
 
-  var _isStarted = false.obs;
-  get isStarted => this._isStarted.value;
-  set isStarted(value) => this._isStarted.value = value;
+  var _splashText = true.obs;
+  get splashText => this._splashText.value;
+  set splashText(value) => this._splashText.value = value;
+
+  var _splashView = true.obs;
+  get splashView => this._splashView.value;
+  set splashView(value) => this._splashView.value = value;
 
   var _page = 0.obs;
   get page => this._page.value;
@@ -97,7 +101,6 @@ class MainController extends GetxController with GetSingleTickerProviderStateMix
     });
 
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      isStarted = true;
       changeRotation();
     });
 

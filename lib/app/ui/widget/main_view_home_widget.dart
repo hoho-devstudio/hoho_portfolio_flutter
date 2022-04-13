@@ -25,7 +25,7 @@ class MainViewHomeWidget extends GetView<MainController> {
                   );
                 }),
                 Obx(() {
-                  return AnimatedOpacity(
+                  return !controller.splashText? AnimatedOpacity(
                       duration: const Duration(milliseconds: 500),
                       opacity: controller.offsetTop ? 1.0 : 0.0,
                       child: DefaultTextStyle(
@@ -43,7 +43,7 @@ class MainViewHomeWidget extends GetView<MainController> {
                           isRepeatingAnimation: true,
                         ),
                       )
-                  );
+                  ) : Container();
                 })
               ],
             ),

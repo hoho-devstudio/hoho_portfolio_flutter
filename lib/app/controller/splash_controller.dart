@@ -6,9 +6,4 @@ class SplashController extends GetxController {
   get isFinished => this._isFinished.value;
   set isFinished(value) => this._isFinished.value = value;
 
-
-
-
-
-
 }

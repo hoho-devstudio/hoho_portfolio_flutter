@@ -6,7 +6,7 @@ import 'app/ui/theme/app_theme.dart';
 
 void main() {
   runApp(GetMaterialApp(
-    initialRoute: Routes.splash,
+    initialRoute: Routes.main,
     debugShowCheckedModeBanner: false,
     theme: appThemeData,
     defaultTransition: Transition.fadeIn,

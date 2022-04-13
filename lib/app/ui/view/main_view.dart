@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hoho_portfolio_flutter/app/controller/main_controller.dart';
+import 'package:hoho_portfolio_flutter/app/ui/view/splah_view.dart';
 import 'package:hoho_portfolio_flutter/app/ui/widget/main_view_kakaobank_widget.dart';
 
 import '../widget/main_view_aboutme_widget.dart';
@@ -15,31 +16,26 @@ class MainView extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Obx(() {
-          return AnimatedOpacity(
-            duration: const Duration(milliseconds: 1000),
-            opacity: controller.isStarted? 1.0 : 0.0,
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Container(
-                  color: Colors.white,
-                  child: ListView(
-                    controller: controller.scrollerController,
-                    children: [
-                      MainViewHomeWidget(),
-                      MainViewAboutMeWidget(),
-                      MainViewProjectWidget(),
-                      MainViewKakaoBankWidget(),
-                      MainViewContactWidget(),
-                    ],
-                  ),
-                ),
-                MainViewTopWidget()
-              ],
+        body: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Container(
+              color: Colors.white,
+              child: ListView(
+                controller: controller.scrollerController,
+                children: [
+                  MainViewHomeWidget(),
+                  MainViewAboutMeWidget(),
+                  MainViewProjectWidget(),
+                  MainViewKakaoBankWidget(),
+                  MainViewContactWidget(),
+                ],
+              ),
             ),
-          );
-        })
+            MainViewTopWidget(),
+            SplashView()
+          ],
+        )
     );
   }
 
