@@ -304,15 +304,15 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                               ),
                             ),
                             SizedBox(height: 20,),
-                            Text('현) NICE비즈니스플랫폼 - Android, iOS 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
+                            Text('현) NICE비즈니스플랫폼 - Android, iOS 개발자', style: TextStyle(fontSize: 15, fontFamily: 'Nanum'),),
                             SizedBox(height: 10,),
-                            Text('전) NICE평가정보(파견) - Android 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
+                            Text('전) NICE평가정보(파견) - Android 개발자', style: TextStyle(fontSize: 15, fontFamily: 'Nanum'),),
                             SizedBox(height: 10,),
-                            Text('전) 와이즈인프라코어 - Android 리드 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
+                            Text('전) 와이즈인프라코어 - Android 리드 개발자', style: TextStyle(fontSize: 15, fontFamily: 'Nanum'),),
                             SizedBox(height: 10,),
-                            Text('전) 브레닉스 - Android 리드 개발자', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
+                            Text('전) 브레닉스 - Android 리드 개발자', style: TextStyle(fontSize: 15, fontFamily: 'Nanum'),),
                             SizedBox(height: 10,),
-                            Text('전) 팬텍(파견) - 모바일 FW개발 연구원', style: TextStyle(fontSize: 15, fontFamily: 'NanumGothic'),),
+                            Text('전) 팬텍(파견) - 모바일 FW개발 연구원', style: TextStyle(fontSize: 15, fontFamily: 'Nanum'),),
                           ],
                         )
                       ],
@@ -389,7 +389,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('P2P 투자/대출 하이브리드 앱으로 백신, 보안키패드, 위변조/난독화, 스크래핑, 공인인증서 기능 등에 대한 웹 연동 처리', style: TextStyle(fontFamily: 'NanumGothic'),),
+                                            child: Text('P2P 투자/대출 하이브리드 앱으로 백신, 보안키패드, 위변조/난독화, 스크래핑, 공인인증서 기능 등에 대한 웹 연동 처리', style: TextStyle(fontFamily: 'Nanum'),),
                                           ),
                                           SizedBox(height: 20,),
                                           Row(
@@ -403,21 +403,21 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('P2P 투자/대출 하이브리드 앱으로 보안키패드, 위변조/난독화, 스크래핑, 공인인증서 기능 등에 대한 웹 연동 처리', style: TextStyle(fontFamily: 'NanumGothic'),),
+                                            child: Text('P2P 투자/대출 하이브리드 앱으로 보안키패드, 위변조/난독화, 스크래핑, 공인인증서 기능 등에 대한 웹 연동 처리', style: TextStyle(fontFamily: 'Nanum'),),
                                           ),
                                           SizedBox(height: 20,),
                                           Text('👉  NICEabc 서버(Spring Framework) 개발', style: TextStyle(fontSize: 16),),
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('Oracle DB연동 모바일 API 개발', style: TextStyle(fontFamily: 'NanumGothic'),),
+                                            child: Text('Oracle DB연동 모바일 API 개발', style: TextStyle(fontFamily: 'Nanum'),),
                                           ),
                                           SizedBox(height: 20,),
                                           Text('👉  NICEabc 푸시 배치서버 개발', style: TextStyle(fontSize: 16),),
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('FCM 푸시발송 처리', style: TextStyle(fontFamily: 'NanumGothic'),),
+                                            child: Text('FCM 푸시발송 처리', style: TextStyle(fontFamily: 'Nanum'),),
                                           ),
                                         ],
                                       )
@@ -472,12 +472,12 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('개인 신용등급평가 하이브리드 앱으로 백신, 보안키패드, 위변조/난독화, 삼성패스 생체인증, 스크래핑, 공인인증서 기능 등에 대한', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            child: Text('개인 신용등급평가 하이브리드 앱으로 백신, 보안키패드, 위변조/난독화, 삼성패스 생체인증, 스크래핑, 공인인증서 기능 등에 대한', style: TextStyle(fontFamily: 'Nanum')),
                                           ),
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('웹 연동 처리', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            child: Text('웹 연동 처리', style: TextStyle(fontFamily: 'Nanum')),
                                           ),
                                         ],
                                       )
@@ -534,12 +534,12 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('주민등록번호 대체 인증 네이티브 앱으로 백신, 보안키패드, 위변조/난독화, 터치키, 삼성패스 생체인증, 목소리 인증 등에 대한', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            child: Text('주민등록번호 대체 인증 네이티브 앱으로 백신, 보안키패드, 위변조/난독화, 터치키, 삼성패스 생체인증, 목소리 인증 등에 대한', style: TextStyle(fontFamily: 'Nanum')),
                                           ),
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('기능 유지보수', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            child: Text('기능 유지보수', style: TextStyle(fontFamily: 'Nanum')),
                                           ),
                                         ],
                                       )
@@ -596,7 +596,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('스크래핑 연동 네이티브 앱으로 백신, 보안키패드, 스크래핑, 공인인증서 등에 대한 기능 유지보수', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            child: Text('스크래핑 연동 네이티브 앱으로 백신, 보안키패드, 스크래핑, 공인인증서 등에 대한 기능 유지보수', style: TextStyle(fontFamily: 'Nanum')),
                                           ),
                                         ],
                                       )
@@ -633,14 +633,14 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('영어말하기대회 네이티브 앱으로 녹음 및 업로드 대회 참가, 랭킹시스템, 번역요청 등의 기능 개발', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            child: Text('영어말하기대회 네이티브 앱으로 녹음 및 업로드 대회 참가, 랭킹시스템, 번역요청 등의 기능 개발', style: TextStyle(fontFamily: 'Nanum')),
                                           ),
                                           SizedBox(height: 20,),
                                           Text('👉  MESA 서버(Spring Framework) 개발', style: TextStyle(fontSize: 16),),
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('MSSQL DB연동 모바일 API 개발', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            child: Text('MSSQL DB연동 모바일 API 개발', style: TextStyle(fontFamily: 'Nanum')),
                                           ),
                                         ],
                                       )
@@ -682,7 +682,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('크로스팬 블루투스 원격제어 리모트컨트롤 기능 개발', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            child: Text('크로스팬 블루투스 원격제어 리모트컨트롤 기능 개발', style: TextStyle(fontFamily: 'Nanum')),
                                           ),
                                         ],
                                       )
@@ -731,14 +731,14 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('모바일엑스포 네이티브 앱으로 전시회 업체의 입점, 결제, 홍보 등의 기능 개발', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            child: Text('모바일엑스포 네이티브 앱으로 전시회 업체의 입점, 결제, 홍보 등의 기능 개발', style: TextStyle(fontFamily: 'Nanum')),
                                           ),
                                           SizedBox(height: 20,),
                                           Text('👉  MEXPO 서버(Spring Framework) 개발', style: TextStyle(fontSize: 16),),
                                           SizedBox(height: 5,),
                                           Padding(
                                             padding: const EdgeInsets.only(left: 28),
-                                            child: Text('MSSQL DB연동 모바일 API 개발', style: TextStyle(fontFamily: 'NanumGothic')),
+                                            child: Text('MSSQL DB연동 모바일 API 개발', style: TextStyle(fontFamily: 'Nanum')),
                                           ),
                                         ],
                                       )
@@ -865,7 +865,7 @@ class _MyAppPageState extends State<MyAppPage> with TickerProviderStateMixin {
                         child: DefaultTextStyle(
                           style: const TextStyle(
                               fontSize: 38,
-                              fontFamily: 'NanumGothic',
+                              fontFamily: 'Nanum',
                               color: Colors.black
                           ),
                           child: AnimatedTextKit(

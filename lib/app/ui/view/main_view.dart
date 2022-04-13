@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hoho_portfolio_flutter/app/controller/main_controller.dart';
-import 'package:hoho_portfolio_flutter/app/ui/view/splah_view.dart';
-import 'package:hoho_portfolio_flutter/app/ui/widget/main_view_kakaobank_widget.dart';
+import 'package:hoho_portfolio_flutter/app/ui/widget/splah_widget.dart';
+import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank_widget.dart';
 
-import '../widget/main_view_aboutme_widget.dart';
-import '../widget/main_view_contact_widget.dart';
-import '../widget/main_view_home_widget.dart';
-import '../widget/main_view_project_widget.dart';
-import '../widget/main_view_top_widget.dart';
+import '../widget/aboutme_widget.dart';
+import '../widget/contact_widget.dart';
+import '../widget/home_widget.dart';
+import '../widget/project_widget.dart';
+import '../widget/navigation_widget.dart';
 
 class MainView extends GetView<MainController> {
   const MainView({Key? key}) : super(key: key);
@@ -24,16 +24,16 @@ class MainView extends GetView<MainController> {
               child: ListView(
                 controller: controller.scrollerController,
                 children: [
-                  MainViewHomeWidget(),
-                  MainViewAboutMeWidget(),
-                  MainViewProjectWidget(),
-                  MainViewKakaoBankWidget(),
-                  MainViewContactWidget(),
+                  HomeWidget(),
+                  AboutMeWidget(),
+                  ProjectWidget(),
+                  KakaoBankWidget(),
+                  ContactWidget(),
                 ],
               ),
             ),
-            MainViewTopWidget(),
-            SplashView()
+            NavigationWidget(),
+            SplashWidget()
           ],
         )
     );

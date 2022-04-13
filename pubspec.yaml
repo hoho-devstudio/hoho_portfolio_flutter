@@ -68,14 +68,18 @@ flutter:
   # list giving the asset and other descriptors for the fonts. For
   # example:
   fonts:
-    - family: NanumGothic
+    - family: Nanum
       fonts:
         - asset: assets/fonts/NanumGothic-Regular.ttf
-        - asset: assets/fonts/NanumGothic-Bold.ttf
-        - asset: assets/fonts/NanumGothic-ExtraBold.ttf
     - family: Jua
       fonts:
         - asset: assets/fonts/Jua-Regular.ttf
+    - family: Noto
+      fonts:
+        - asset: assets/fonts/NotoSansKR-Regular.otf
+    - family: Day
+      fonts:
+        - asset: assets/fonts/SingleDay-Regular.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

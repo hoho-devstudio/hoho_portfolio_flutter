@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MainController extends GetxController with GetSingleTickerProviderStateMixin {
+class MainController extends GetxController with GetTickerProviderStateMixin{
 
   late ScrollController scrollerController;
   late TabController tabController;
+  late TabController kbTabController;
 
   var pageHeight = [900, 420, 1100, 1000, 500];
   var offset = 0;
@@ -51,14 +52,20 @@ class MainController extends GetxController with GetSingleTickerProviderStateMix
     }
   }
 
+  var _kbTabIndex = 0.obs;
+  get kbTabIndex => this._kbTabIndex.value;
+  set kbTabIndex(value) => this._kbTabIndex.value = value;
+
   @override
   void onInit() {
     scrollerController = ScrollController(
       // initialScrollOffset: (pageHeight[0] + pageHeight[1] + pageHeight[2]).toDouble()
     );
-    tabController = TabController(
-        length: 7, vsync: this, initialIndex: 0
-    );
+    tabController = TabController(length: 7, vsync: this, initialIndex: 0);
+    kbTabController = TabController(length: 4, vsync: this);
+    kbTabController.addListener(() {
+      kbTabIndex = kbTabController.index;
+    });
 
     scrollerController.addListener(() {
       offset = scrollerController.offset.toInt();
@@ -111,6 +118,7 @@ class MainController extends GetxController with GetSingleTickerProviderStateMix
   void onClose() {
     scrollerController.dispose();
     tabController.dispose();
+    kbTabController.dispose();
     super.onClose();
   }
 
