@@ -52,9 +52,18 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
     }
   }
 
+  // kakaobank
   var _kbTabIndex = 0.obs;
   get kbTabIndex => this._kbTabIndex.value;
   set kbTabIndex(value) => this._kbTabIndex.value = value;
+
+  var _loginProgress = false.obs;
+  get loginProgress => this._loginProgress.value;
+  set loginProgress(value) => this._loginProgress.value = value;
+
+  var _loginView = true.obs;
+  get loginView => this._loginView.value;
+  set loginView(value) => this._loginView.value = value;
 
   @override
   void onInit() {
@@ -62,7 +71,7 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
       // initialScrollOffset: (pageHeight[0] + pageHeight[1] + pageHeight[2]).toDouble()
     );
     tabController = TabController(length: 7, vsync: this, initialIndex: 0);
-    kbTabController = TabController(length: 4, vsync: this);
+    kbTabController = TabController(length: 4, vsync: this, initialIndex: 1);
     kbTabController.addListener(() {
       kbTabIndex = kbTabController.index;
     });

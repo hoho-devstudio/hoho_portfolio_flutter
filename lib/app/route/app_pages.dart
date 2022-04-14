@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:hoho_portfolio_flutter/app/binding/main_binding.dart';
 
 import '../ui/view/main_view.dart';
-import '../ui/widget/kakaobank_widget.dart';
+import '../ui/widget/kakaobank/kakaobank_widget.dart';
 
 part './app_routes.dart';
 

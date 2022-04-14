@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hoho_portfolio_flutter/app/controller/main_controller.dart';
-import 'package:hoho_portfolio_flutter/app/ui/widget/splah_widget.dart';
-import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank_widget.dart';
+import 'package:hoho_portfolio_flutter/app/ui/widget/main/splah_widget.dart';
+import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_widget.dart';
 
-import '../widget/aboutme_widget.dart';
-import '../widget/contact_widget.dart';
-import '../widget/home_widget.dart';
-import '../widget/project_widget.dart';
-import '../widget/navigation_widget.dart';
+import '../widget/main/aboutme_widget.dart';
+import '../widget/main/contact_widget.dart';
+import '../widget/main/home_widget.dart';
+import '../widget/main/project_widget.dart';
+import '../widget/main/navigation_widget.dart';
 
 class MainView extends GetView<MainController> {
   const MainView({Key? key}) : super(key: key);
