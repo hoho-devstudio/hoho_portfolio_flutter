@@ -6,12 +6,12 @@ import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_item_wi
 import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_user_widget.dart';
 import 'package:timer_builder/timer_builder.dart';
 
+import 'kakaobank_splash_widget.dart';
+
 class KakaoBankWidget extends GetView<MainController> {
 
   @override
   Widget build(BuildContext context) {
-    var now = DateTime.now();
-
     return Container(
       height: controller.pageHeight[3].toDouble(),
       color: const Color(0xfff9f9f9),
@@ -57,48 +57,60 @@ class KakaoBankWidget extends GetView<MainController> {
                           Icon(Icons.wifi, size: 16, color: Colors.white,),
                           Icon(Icons.signal_cellular_alt, size: 16, color: Colors.white,),
                           Icon(Icons.battery_charging_full, size: 16, color: Colors.white,),
+                          TextButton(onPressed: () {
+                            controller.loginView = true;
+                          }, child: Text('logout', style: TextStyle(color: Colors.white),))
                         ],
                       ),
                     ),
                     Expanded(
                       child: Stack(
                         children: [
-                          DefaultTabController(
-                            length: 4,
-                            child: Scaffold(
-                              // appBar: AppBar(
-                              //   title: Text('kakao bank'),
-                              //   backgroundColor: const Color(0xff2e344d),
-                              // ),
-                              bottomNavigationBar: TabBar(
-                                controller: controller.kbTabController,
-                                tabs: [
-                                  Tab(icon: Obx(() {
-                                    return controller.kbTabIndex == 0? Icon(Icons.person, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.person, color: Color(0xffb2b2b2), size: 29);
-                                  })),
-                                  Tab(icon: Obx(() {
-                                    return controller.kbTabIndex == 1? Icon(Icons.grid_view, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.grid_view, color: Color(0xffb2b2b2), size: 29);
-                                  })),
-                                  Tab(icon: Obx(() {
-                                    return controller.kbTabIndex == 2? Icon(Icons.notifications, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.notifications, color: Color(0xffb2b2b2), size: 29);
-                                  })),
-                                  Tab(icon: Obx(() {
-                                    return controller.kbTabIndex == 3? Icon(Icons.more_horiz, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.more_horiz, color: Color(0xffb2b2b2), size: 29);
-                                  })),
-                                ],
-                                indicatorColor: Colors.transparent,
+                          Obx(() {
+                            return AnimatedPositioned(
+                              duration: Duration(milliseconds: 200),
+                              right: 0,
+                              left: 0,
+                              top: controller.loginView? 800 : 0,
+                              bottom: controller.loginView? -800 : 0,
+                              child: DefaultTabController(
+                                length: 4,
+                                child: Scaffold(
+                                  // appBar: AppBar(
+                                  //   title: Text('kakao bank'),
+                                  //   backgroundColor: const Color(0xff2e344d),
+                                  // ),
+                                  bottomNavigationBar: TabBar(
+                                    controller: controller.kbTabController,
+                                    tabs: [
+                                      Tab(icon: Obx(() {
+                                        return controller.kbTabIndex == 0? Icon(Icons.person, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.person, color: Color(0xffb2b2b2), size: 29);
+                                      })),
+                                      Tab(icon: Obx(() {
+                                        return controller.kbTabIndex == 1? Icon(Icons.grid_view, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.grid_view, color: Color(0xffb2b2b2), size: 29);
+                                      })),
+                                      Tab(icon: Obx(() {
+                                        return controller.kbTabIndex == 2? Icon(Icons.notifications, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.notifications, color: Color(0xffb2b2b2), size: 29);
+                                      })),
+                                      Tab(icon: Obx(() {
+                                        return controller.kbTabIndex == 3? Icon(Icons.more_horiz, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.more_horiz, color: Color(0xffb2b2b2), size: 29);
+                                      })),
+                                    ],
+                                    indicatorColor: Colors.transparent,
+                                  ),
+                                  body: TabBarView(
+                                    controller: controller.kbTabController,
+                                    children: [
+                                      KakaoBankUserWidget(),
+                                      KakaoBankItemWidget(),
+                                      Placeholder(),
+                                      Placeholder(),
+                                    ],
+                                  ),
+                                ),
                               ),
-                              body: TabBarView(
-                                controller: controller.kbTabController,
-                                children: [
-                                  KakaoBankUserWidget(),
-                                  KakaoBankItemWidget(),
-                                  Placeholder(),
-                                  Placeholder(),
-                                ],
-                              ),
-                            ),
-                          ),
+                            );
+                          }),
                           // KakaoBankSplashWidget()
                         ],
                       ),

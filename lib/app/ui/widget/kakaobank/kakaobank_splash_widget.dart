@@ -10,10 +10,10 @@ class KakaoBankSplashWidget extends GetView<MainController> {
   Widget build(BuildContext context) {
     return Obx(() {
       return IgnorePointer(
-        ignoring: controller.splashView? false : true,
+        ignoring: controller.loginView? false : true,
         child: AnimatedOpacity(
-          duration: Duration(milliseconds: 500),
-          opacity: controller.splashView? 1.0 : 0.0,
+          duration: Duration(milliseconds: 300),
+          opacity: controller.loginView? 1.0 : 0.0,
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -30,20 +30,20 @@ class KakaoBankSplashWidget extends GetView<MainController> {
                     ),
                     Spacer(),
                     Container(
-                        width: 220,
+                        width: 280,
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
-                          color: Colors.black26.withOpacity(0.1),
+                          color: Colors.black12.withOpacity(0.1),
 
                         ),
                         child: TextButton(onPressed: () {
                           controller.loginProgress = true;
                           Future.delayed(Duration(milliseconds: 1300), () {
                             controller.loginProgress = false;
-                            controller.splashView = false;
+                            controller.loginView = false;
                           });
-                        }, child: Text('로그인', style: TextStyle(color: Colors.black, fontFamily: 'Jua', fontSize: 18),))
+                        }, child: Text('로그인', style: TextStyle(color: Colors.black, fontFamily: 'Noto', fontSize: 12, fontWeight: FontWeight.bold),))
                     ),
                     SizedBox(height: 100,)
                   ],

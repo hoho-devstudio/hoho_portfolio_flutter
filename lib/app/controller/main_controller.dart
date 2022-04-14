@@ -61,7 +61,7 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   get loginProgress => this._loginProgress.value;
   set loginProgress(value) => this._loginProgress.value = value;
 
-  var _loginView = true.obs;
+  var _loginView = false.obs;
   get loginView => this._loginView.value;
   set loginView(value) => this._loginView.value = value;
 

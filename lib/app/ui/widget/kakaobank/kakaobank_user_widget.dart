@@ -88,7 +88,9 @@ class KakaoBankUserWidget extends GetView<MainController> {
                           children: [
                             Container(
                               width: 100,
-                                child: TextButton(onPressed: () {}, child: Text('이체', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),))),
+                                child: TextButton(onPressed: () {
+                                  test(context);
+                                }, child: Text('이체', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),))),
                             Container(
                               width: 1,
                               height: 15,
@@ -310,6 +312,46 @@ class KakaoBankUserWidget extends GetView<MainController> {
         ],
       ),
     );
+  }
+
+  void test(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: new Icon(Icons.photo),
+                title: new Text('Photo'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: new Icon(Icons.music_note),
+                title: new Text('Music'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: new Icon(Icons.videocam),
+                title: new Text('Video'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: new Icon(Icons.share),
+                title: new Text('Share'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
   }
 
 }
