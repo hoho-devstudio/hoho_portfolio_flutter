@@ -6,6 +6,7 @@ import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_item_wi
 import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_user_widget.dart';
 import 'package:timer_builder/timer_builder.dart';
 
+import '../../../util/app_scroll_behavior.dart';
 import 'kakaobank_splash_widget.dart';
 
 class KakaoBankWidget extends GetView<MainController> {
@@ -26,6 +27,7 @@ class KakaoBankWidget extends GetView<MainController> {
               border: Border.all(width: 0.1)
             ),
             child: MaterialApp(
+              scrollBehavior: AppScrollBehavior(),
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 primaryColor: const Color(0xff2e344d),
@@ -71,8 +73,8 @@ class KakaoBankWidget extends GetView<MainController> {
                               duration: Duration(milliseconds: 200),
                               right: 0,
                               left: 0,
-                              top: controller.loginView? 800 : 0,
-                              bottom: controller.loginView? -800 : 0,
+                              top: controller.loginView? 775 : 0,
+                              bottom: controller.loginView? -775 : 0,
                               child: DefaultTabController(
                                 length: 4,
                                 child: Scaffold(
@@ -111,7 +113,7 @@ class KakaoBankWidget extends GetView<MainController> {
                               ),
                             );
                           }),
-                          // KakaoBankSplashWidget()
+                          KakaoBankSplashWidget()
                         ],
                       ),
                     ),

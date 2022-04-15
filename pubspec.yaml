@@ -32,6 +32,7 @@ dependencies:
   url_launcher: ^6.0.20
   timer_builder: ^2.0.0
   date_format: ^2.0.6
+  smooth_page_indicator: ^1.0.0+2
 
 dev_dependencies:
   flutter_test:

@@ -10,13 +10,13 @@ class SplashWidget extends GetView<MainController> {
     return IgnorePointer(
       child: Obx(() {
         return AnimatedOpacity(
-          duration: Duration(milliseconds: 1500),
+          duration: Duration(milliseconds: 500),
           opacity: controller.splashView? 1.0 : 0.0,
           child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: Colors.white,
-              child: AnimatedOpacity(
+              color: const Color(0xff2e344d),
+              child: controller.splashStart? AnimatedOpacity(
                 duration: Duration(milliseconds: 1500),
                 opacity: controller.splashText? 1.0 : 0.0,
                 child: Center(
@@ -26,7 +26,7 @@ class SplashWidget extends GetView<MainController> {
                       style: const TextStyle(
                           fontSize: 38,
                           fontFamily: 'Nanum',
-                          color: Colors.black
+                          color: Colors.white
                       ),
                       child: AnimatedTextKit(
                         animatedTexts: [
@@ -44,7 +44,7 @@ class SplashWidget extends GetView<MainController> {
                     ),
                   ),
                 ),
-              )
+              ) : Container()
           ),
         );
       }),

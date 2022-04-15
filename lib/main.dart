@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'app/route/app_pages.dart';
 import 'app/ui/theme/app_theme.dart';
+import 'app/util/app_scroll_behavior.dart';
 
 void main() {
   runApp(GetMaterialApp(
@@ -11,6 +12,7 @@ void main() {
     theme: appThemeData,
     defaultTransition: Transition.fade,
     getPages: AppPages.pages,
+    scrollBehavior: AppScrollBehavior(),
   ));
 }
 

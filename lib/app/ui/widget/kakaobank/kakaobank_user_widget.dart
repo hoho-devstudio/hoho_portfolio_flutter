@@ -13,7 +13,7 @@ class KakaoBankUserWidget extends GetView<MainController> {
         children: [
           Container(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -48,10 +48,10 @@ class KakaoBankUserWidget extends GetView<MainController> {
           ),
           Expanded(
             child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 14),
               children: [
                 SizedBox(height: 10,),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 14),
                   padding: EdgeInsets.only(top: 10, bottom: 18),
                   decoration: BoxDecoration(
                     color: Color(0xffd9e6ec),
@@ -107,7 +107,6 @@ class KakaoBankUserWidget extends GetView<MainController> {
                 ),
                 SizedBox(height: 10,),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 14),
                   decoration: BoxDecoration(
                       color: Color(0xffd9e6ec),
                       borderRadius: BorderRadius.circular(12)
@@ -148,7 +147,6 @@ class KakaoBankUserWidget extends GetView<MainController> {
                 ),
                 SizedBox(height: 10,),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 14),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12)
@@ -253,7 +251,6 @@ class KakaoBankUserWidget extends GetView<MainController> {
                 ),
                 SizedBox(height: 10,),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 14),
                   padding: EdgeInsets.only(top: 10, bottom: 18),
                   decoration: BoxDecoration(
                       color: Colors.yellow,
