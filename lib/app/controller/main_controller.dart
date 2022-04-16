@@ -7,19 +7,43 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   late TabController tabController;
   late TabController kbTabController;
   late TabController kbItemTabController;
+  late ScrollController kbUserScrollController;
   late ScrollController kbItemScrollController;
+  late ScrollController kbNotiScrollController;
+  late ScrollController kbInfoScrollController;
   late PageController kbItemPageController;
 
   var pageHeight = [900, 420, 1100, 1000, 500];
   var offset = 0;
   var kbPageHeight = [0, 350, 1150, 1890, 2330, 2550];
-  var kbOffset = 0;
+  var kbOffset = [0, 0, 0, 0];
   var kbItemPage = 0;
   var kbItemChanging = false;
 
-  var _kbItemTopMargin = 80.obs;
-  get kbItemTopMargin => this._kbItemTopMargin.value;
-  set kbItemTopMargin(value) => this._kbItemTopMargin.value = value;
+  var _kbTopHeight = [80.obs, 80.obs, 80.obs, 80.obs];
+  get kbUserTopHeight => this._kbTopHeight[0].value;
+  get kbItemTopHeight => this._kbTopHeight[1].value;
+  get kbNotiTopHeight => this._kbTopHeight[2].value;
+  get kbInfoTopHeight => this._kbTopHeight[3].value;
+  set kbUserTopHeight(value) => this._kbTopHeight[0].value = value;
+  set kbItemTopHeight(value) => this._kbTopHeight[1].value = value;
+  set kbNotiTopHeight(value) => this._kbTopHeight[2].value = value;
+  set kbInfoTopHeight(value) => this._kbTopHeight[3].value = value;
+
+  var _kbTopTextSize = [26.0.obs, 26.0.obs, 26.0.obs, 26.0.obs];
+  get kbUserTopTextSize => this._kbTopTextSize[0].value;
+  get kbItemTopTextSize => this._kbTopTextSize[1].value;
+  get kbNotiTopTextSize => this._kbTopTextSize[2].value;
+  get kbInfoTopTextSize => this._kbTopTextSize[3].value;
+  set kbUserTopTextSize(value) => this._kbTopTextSize[0].value = value;
+  set kbItemTopTextSize(value) => this._kbTopTextSize[1].value = value;
+  set kbNotiTopTextSize(value) => this._kbTopTextSize[2].value = value;
+  set kbInfoTopTextSize(value) => this._kbTopTextSize[3].value = value;
+
+  var _kbUserImageSize = 46.0.obs;
+  get kbUserImageSize => this._kbUserImageSize.value;
+  set kbUserImageSize(value) => this._kbUserImageSize.value = value;
+
 
   var _kbItemScrollMove = false.obs;
   get kbItemScrollMove => this._kbItemScrollMove.value;
@@ -80,7 +104,7 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   get loginProgress => this._loginProgress.value;
   set loginProgress(value) => this._loginProgress.value = value;
 
-  var _loginView = false.obs;
+  var _loginView = true.obs;
   get loginView => this._loginView.value;
   set loginView(value) => this._loginView.value = value;
 
@@ -89,9 +113,13 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
     scrollerController = ScrollController(
       // initialScrollOffset: (pageHeight[0] + pageHeight[1] + pageHeight[2]).toDouble()
     );
+    kbUserScrollController = ScrollController();
     kbItemScrollController = ScrollController();
+    kbNotiScrollController = ScrollController();
+    kbInfoScrollController = ScrollController();
+
     tabController = TabController(length: 7, vsync: this, initialIndex: 0);
-    kbTabController = TabController(length: 4, vsync: this, initialIndex: 1);
+    kbTabController = TabController(length: 4, vsync: this, initialIndex: 0);
     kbTabController.addListener(() {
       kbTabIndex = kbTabController.index;
     });
@@ -159,40 +187,92 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
       }
     });
 
-    kbItemScrollController.addListener(() {
-      kbOffset = kbItemScrollController.offset.toInt();
-
-      if (kbItemTopMargin > 0 && 80 - kbOffset > 0) {
-        kbItemTopMargin = 80 - kbOffset;
-      } else if (kbItemTopMargin == 0 && 80 - kbOffset > 0) {
-        kbItemTopMargin = 80 - kbOffset;
+    kbUserScrollController.addListener(() {
+      kbOffset[0] = kbUserScrollController.offset.toInt();
+      if (80 - kbOffset[0] > 60) {
+        kbUserTopHeight = 80 - kbOffset[0];
       } else {
-        kbItemTopMargin = 0;
+        kbUserTopHeight = 60;
+      }
+
+      if (kbUserTopHeight >= 80) {
+        kbUserTopTextSize = 26;
+        kbUserImageSize = 46;
+      } else if (kbUserTopHeight >= 65) { // 70 ~ 79
+        kbUserTopTextSize = 26 - kbOffset[0]/3;
+        kbUserImageSize = 46 - kbOffset[0]/2;
+      } else {
+        kbUserTopTextSize = 21;
+        kbUserImageSize = 38.5;
+      }
+    });
+
+    kbNotiScrollController.addListener(() {
+      kbOffset[2] = kbNotiScrollController.offset.toInt();
+      if (80 - kbOffset[2] > 60) {
+        kbNotiTopHeight = 80 - kbOffset[2];
+      } else {
+        kbNotiTopHeight = 60;
+      }
+
+      if (kbNotiTopHeight >= 80) {
+        kbNotiTopTextSize = 26;
+      } else if (kbNotiTopHeight >= 65) { // 70 ~ 79
+        kbNotiTopTextSize = 26 - kbOffset[2]/3;
+      } else {
+        kbNotiTopTextSize = 21;
+      }
+    });
+
+    kbInfoScrollController.addListener(() {
+      kbOffset[3] = kbInfoScrollController.offset.toInt();
+      if (80 - kbOffset[3] > 60) {
+        kbInfoTopHeight = 80 - kbOffset[3];
+      } else {
+        kbInfoTopHeight = 60;
+      }
+
+      if (kbInfoTopHeight >= 80) {
+        kbInfoTopTextSize = 26;
+      } else if (kbInfoTopHeight >= 65) { // 70 ~ 79
+        kbInfoTopTextSize = 26 - kbOffset[3]/3;
+      } else {
+        kbInfoTopTextSize = 21;
+      }
+    });
+
+    kbItemScrollController.addListener(() {
+      kbOffset[1] = kbItemScrollController.offset.toInt();
+
+      if (80 - kbOffset[1] > 0) {
+        kbItemTopHeight = 80 - kbOffset[1];
+      } else {
+        kbItemTopHeight = 0;
       }
 
       if (kbItemScrollMove) return;
 
-      if (kbOffset <= kbPageHeight[1]) {
+      if (kbOffset[1] <= kbPageHeight[1]) {
         if (kbItemPage != 0) {
           kbItemTabController.index = 0;
         }
-      } else if (kbOffset <= kbPageHeight[2]) {
+      } else if (kbOffset[1] <= kbPageHeight[2]) {
         if (kbItemPage != 1) {
           kbItemTabController.index = 1;
         }
-      } else if (kbOffset <= kbPageHeight[3]) {
+      } else if (kbOffset[1] <= kbPageHeight[3]) {
         if (kbItemPage != 2) {
           kbItemTabController.index = 2;
         }
-      } else if (kbOffset <= kbPageHeight[4]) {
+      } else if (kbOffset[1] <= kbPageHeight[4]) {
         if (kbItemPage != 3) {
           kbItemTabController.index = 3;
         }
-      } else if (kbOffset <= kbPageHeight[5]) {
+      } else if (kbOffset[1] <= kbPageHeight[5]) {
         if (kbItemPage != 4) {
           kbItemTabController.index = 4;
         }
-      } else if (kbOffset <= kbPageHeight[5] + 500) {
+      } else if (kbOffset[1] <= kbPageHeight[5] + 500) {
         if (kbItemPage != 5) {
           kbItemTabController.index = 5;
         }
@@ -216,7 +296,10 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
     tabController.dispose();
     kbTabController.dispose();
     kbItemTabController.dispose();
+    kbUserScrollController.dispose();
     kbItemScrollController.dispose();
+    kbNotiScrollController.dispose();
+    kbInfoScrollController.dispose();
     kbItemPageController.dispose();
     super.onClose();
   }

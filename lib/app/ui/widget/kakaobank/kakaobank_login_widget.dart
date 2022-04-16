@@ -4,7 +4,7 @@ import 'package:hoho_portfolio_flutter/app/controller/main_controller.dart';
 import '../../theme/app_colors.dart';
 
 
-class KakaoBankSplashWidget extends GetView<MainController> {
+class KakaoBankLoginWidget extends GetView<MainController> {
 
   @override
   Widget build(BuildContext context) {

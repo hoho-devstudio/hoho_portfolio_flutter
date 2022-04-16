@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -15,12 +14,12 @@ class KakaoBankItemWidget extends GetView<MainController> {
         children: [
           Obx(() {
             return Container(
-              height: controller.kbItemTopMargin,
+              height: controller.kbItemTopHeight,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               alignment: Alignment.centerLeft,
               child: AnimatedOpacity(
                 duration: Duration(milliseconds: 200),
-                opacity: controller.kbItemTopMargin < 35? 0.0 : 1.0,
+                opacity: controller.kbItemTopHeight < 35? 0.0 : 1.0,
                 child: Text('상품/서비스', style: TextStyle(fontSize: 26, fontFamily: 'Day', fontWeight: FontWeight.bold))
               ),
             );
@@ -54,7 +53,7 @@ class KakaoBankItemWidget extends GetView<MainController> {
             child: ListView(
               controller: controller.kbItemScrollController,
               children: [
-                SizedBox(height: 18,),
+                SizedBox(height: 10,),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 14),
                   child: ClipRRect(

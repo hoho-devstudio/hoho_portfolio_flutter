@@ -11,43 +11,47 @@ class KakaoBankUserWidget extends GetView<MainController> {
       color: const Color(0xff2e344d),
       child: Column(
         children: [
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(width: 6,),
-                  Text('김지호', style: TextStyle(fontSize: 26, color: Colors.white, fontFamily: 'Day')),
-                  SizedBox(width: 6,),
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        color: Color(0xff252a3e),
-                        borderRadius: BorderRadius.circular(12)
+          Obx(() {
+            return Container(
+              height: controller.kbUserTopHeight,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(width: 6,),
+                    Text('김지호', style: TextStyle(fontSize: controller.kbUserTopTextSize, color: Colors.white, fontFamily: 'Day')),
+                    SizedBox(width: 6,),
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: Color(0xff252a3e),
+                          borderRadius: BorderRadius.circular(12)
+                      ),
+                      child: Text('내  계좌', style: TextStyle(fontSize: 8, color: Colors.white, fontWeight: FontWeight.bold),),
                     ),
-                    child: Text('내  계좌', style: TextStyle(fontSize: 8, color: Colors.white, fontWeight: FontWeight.bold),),
-                  ),
-                  Spacer(),
-                  Container(
-                    width: 46,
-                    height: 46,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: const DecorationImage(
-                            fit: BoxFit.fitWidth,
-                            image: const AssetImage('assets/images/jiho.jpg'
-                            )
-                        )
+                    Spacer(),
+                    Container(
+                      width: controller.kbUserImageSize,
+                      height: controller.kbUserImageSize,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: const DecorationImage(
+                              fit: BoxFit.fitWidth,
+                              image: const AssetImage('assets/images/jiho.jpg'
+                              )
+                          )
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 6,),
-                ],
+                    SizedBox(width: 6,),
+                  ],
+                ),
               ),
-            ),
-          ),
+            );
+          }),
           Expanded(
             child: ListView(
+              controller: controller.kbUserScrollController,
               padding: EdgeInsets.symmetric(horizontal: 14),
               children: [
                 SizedBox(height: 10,),
