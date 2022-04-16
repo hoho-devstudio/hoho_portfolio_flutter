@@ -7,6 +7,7 @@ import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_info_wi
 import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_item_widget.dart';
 import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_noti_widget.dart';
 import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_user_widget.dart';
+import 'package:hoho_portfolio_flutter/app/util/keep_alive_wrap.dart';
 import 'package:timer_builder/timer_builder.dart';
 
 import '../../../util/app_scroll_behavior.dart';
@@ -110,10 +111,10 @@ class KakaoBankWidget extends GetView<MainController> {
                                   body: TabBarView(
                                     controller: controller.kbTabController,
                                     children: [
-                                      KakaoBankUserWidget(),
-                                      KakaoBankItemWidget(),
-                                      KakaoBankNotiWidget(),
-                                      KakaoBankInfoWidget()
+                                      KeepAliveWrapper(child: KakaoBankUserWidget()),
+                                      KeepAliveWrapper(child: KakaoBankItemWidget()),
+                                      KeepAliveWrapper(child: KakaoBankNotiWidget()),
+                                      KeepAliveWrapper(child: KakaoBankInfoWidget()),
                                     ],
                                   ),
                                 ),
