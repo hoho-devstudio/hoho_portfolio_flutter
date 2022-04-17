@@ -10,14 +10,14 @@ class SplashWidget extends GetView<MainController> {
     return IgnorePointer(
       child: Obx(() {
         return AnimatedOpacity(
-          duration: Duration(milliseconds: 500),
+          duration: Duration(milliseconds: 300),
           opacity: controller.splashView? 1.0 : 0.0,
           child: Container(
               width: double.infinity,
               height: double.infinity,
               color: const Color(0xff2e344d),
               child: controller.splashStart? AnimatedOpacity(
-                duration: Duration(milliseconds: 1500),
+                duration: Duration(milliseconds: 800),
                 opacity: controller.splashText? 1.0 : 0.0,
                 child: Center(
                   child: SizedBox(
@@ -36,7 +36,7 @@ class SplashWidget extends GetView<MainController> {
                         totalRepeatCount: 1,
                         onFinished: () {
                           controller.splashText = false;
-                          Future.delayed(const Duration(milliseconds: 2000), () {
+                          Future.delayed(const Duration(milliseconds: 1500), () {
                             controller.splashView = false;
                           });
                         },

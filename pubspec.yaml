@@ -33,6 +33,7 @@ dependencies:
   timer_builder: ^2.0.0
   date_format: ^2.0.6
   smooth_page_indicator: ^1.0.0+2
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,7 @@ import 'package:hoho_portfolio_flutter/app/ui/theme/app_colors.dart';
 import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_info_widget.dart';
 import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_item_widget.dart';
 import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_noti_widget.dart';
+import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_sample_widget.dart';
 import 'package:hoho_portfolio_flutter/app/ui/widget/kakaobank/kakaobank_user_widget.dart';
 import 'package:hoho_portfolio_flutter/app/util/keep_alive_wrap.dart';
 import 'package:timer_builder/timer_builder.dart';
@@ -78,7 +79,8 @@ class KakaoBankWidget extends GetView<MainController> {
                         children: [
                           Obx(() {
                             return AnimatedPositioned(
-                              duration: Duration(milliseconds: 200),
+                              curve: Curves.ease,
+                              duration: Duration(milliseconds: 300),
                               right: 0,
                               left: 0,
                               top: controller.loginView? 774 : 0,
@@ -121,6 +123,7 @@ class KakaoBankWidget extends GetView<MainController> {
                               ),
                             );
                           }),
+                          KakaoBankSampleWidget(),
                           KakaoBankLoginWidget()
                         ],
                       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:math';
 
 class MainController extends GetxController with GetTickerProviderStateMixin{
 
@@ -15,10 +16,18 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
 
   var pageHeight = [900, 420, 1100, 1000, 500];
   var offset = 0;
-  var kbPageHeight = [0, 350, 1150, 1890, 2330, 2550];
+  var kbPageHeight = [0, 350, 1150, 1890, 2330, 2500];
   var kbOffset = [0, 0, 0, 0];
   var kbItemPage = 0;
   var kbItemChanging = false;
+
+  var _kbUserMoney = [100000.obs, 0.obs, 0.obs];
+  get kbUserMoney1 => this._kbUserMoney[0].value;
+  get kbUserMoney2 => this._kbUserMoney[1].value;
+  get kbUserMoney3 => this._kbUserMoney[2].value;
+  set kbUserMoney1(value) => this._kbUserMoney[0].value = value;
+  set kbUserMoney2(value) => this._kbUserMoney[1].value = value;
+  set kbUserMoney3(value) => this._kbUserMoney[2].value = value;
 
   var _kbTopHeight = [80.obs, 80.obs, 80.obs, 80.obs];
   get kbUserTopHeight => this._kbTopHeight[0].value;
@@ -107,6 +116,14 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   var _loginView = true.obs;
   get loginView => this._loginView.value;
   set loginView(value) => this._loginView.value = value;
+
+  var _sampleView = false.obs;
+  get sampleView => this._sampleView.value;
+  set sampleView(value) => this._sampleView.value = value;
+
+  var _sampleText = 'sample'.obs;
+  get sampleText => this._sampleText.value;
+  set sampleText(value) => this._sampleText.value = value;
 
   @override
   void onInit() {
@@ -287,6 +304,7 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
       });
     });
 
+    kbUserMoney1 = Random().nextInt(3000000000) + 30000000000;
     super.onInit();
   }
 
