@@ -159,7 +159,7 @@ class KakaoBankUserWidget extends GetView<MainController> {
               children: [
                 Container(
                   alignment: Alignment.center,
-                    width: 120,
+                    width: 140,
                     child: Wrap(
                       children: [
                         TextButton(
@@ -178,7 +178,7 @@ class KakaoBankUserWidget extends GetView<MainController> {
                   color: Colors.grey,
                 ),
                 Container(
-                    width: 120,
+                    width: 140,
                     child: TextButton(
                         style: TextButton.styleFrom(primary: Colors.black),
                         onPressed: () {
@@ -388,9 +388,9 @@ class KakaoBankUserWidget extends GetView<MainController> {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              sendType != 1? itemSendWidget(context, '$sendName -> 김지호의 통장으로 10,000원 이체', sendType, 1, 10000) : Container(),
-              sendType != 2? itemSendWidget(context, '$sendName -> 가족통장으로 10,000원 이체', sendType, 2, 10000) : Container(),
-              sendType != 3? itemSendWidget(context, '$sendName -> 데이트통장으로 10,000원 이체', sendType, 3, 10000) : Container(),
+              sendType != 1? itemSendWidget(context, '$sendName -> 김지호의 통장으로 1,000,000원 이체', sendType, 1, 1000000) : Container(),
+              sendType != 2? itemSendWidget(context, '$sendName -> 가족통장으로 1,000,000원 이체', sendType, 2, 1000000) : Container(),
+              sendType != 3? itemSendWidget(context, '$sendName -> 데이트통장으로 1,000,000원 이체', sendType, 3, 1000000) : Container(),
             ],
           );
         });

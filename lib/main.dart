@@ -7,7 +7,7 @@ import 'app/util/app_scroll_behavior.dart';
 
 void main() {
   runApp(GetMaterialApp(
-    initialRoute: Routes.main,
+    initialRoute: Routes.ground,
     debugShowCheckedModeBanner: false,
     theme: appThemeData,
     defaultTransition: Transition.fade,
