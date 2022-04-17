@@ -425,11 +425,20 @@ class KakaoBankUserWidget extends GetView<MainController> {
             case 3: controller.kbUserMoney3 -= money; break;
           }
 
+          var receiveName = '';
           switch (receiveType) {
-            case 1: controller.kbUserMoney1 += money; break;
-            case 2: controller.kbUserMoney2 += money; break;
-            case 3: controller.kbUserMoney3 += money; break;
+            case 1: controller.kbUserMoney1 += money; receiveName = '김지호의 통장'; break;
+            case 2: controller.kbUserMoney2 += money; receiveName = '가족통장'; break;
+            case 3: controller.kbUserMoney3 += money; receiveName = '데이트통장'; break;
           }
+
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Text('$receiveName으로 1,000,000원을 이체하였습니다.', style: TextStyle(fontFamily: 'Noto'),)
+              )
+          );
           Navigator.pop(context);
         },
         child: Container(
