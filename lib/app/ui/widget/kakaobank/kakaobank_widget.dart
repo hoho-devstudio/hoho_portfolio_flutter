@@ -31,6 +31,7 @@ class KakaoBankWidget extends GetView<MainController> {
               border: Border.all(width: 1, color: Colors.black.withOpacity(0.1)),
             ),
             child: MaterialApp(
+              title: 'hoho',
               scrollBehavior: AppScrollBehavior(),
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
