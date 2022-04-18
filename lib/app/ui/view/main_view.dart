@@ -21,16 +21,19 @@ class MainView extends GetView<MainController> {
           children: [
             Container(
               color: Colors.white,
-              child: ListView(
-                controller: controller.scrollerController,
-                children: [
-                  HomeWidget(),
-                  AboutMeWidget(),
-                  ProjectWidget(),
-                  KakaoBankWidget(),
-                  ContactWidget(),
-                ],
-              ),
+              child: Obx(() {
+                return ListView(
+                  controller: controller.scrollerController,
+                  physics: controller.scrollerIsAble? AlwaysScrollableScrollPhysics() : NeverScrollableScrollPhysics(),
+                  children: [
+                    HomeWidget(),
+                    AboutMeWidget(),
+                    ProjectWidget(),
+                    KakaoBankWidget(),
+                    ContactWidget(),
+                  ],
+                );
+              })
             ),
             NavigationWidget(),
             SplashWidget()

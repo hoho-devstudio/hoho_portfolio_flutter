@@ -38,97 +38,105 @@ class KakaoBankWidget extends GetView<MainController> {
                 fontFamily: 'Noto',
               ),
               home: Scaffold(
-                body: Column(
-                  children: [
-                    Obx(() {
-                      return Container(
-                        height: 26,
-                        padding: EdgeInsets.only(left: 12, right: 6),
-                        color: controller.loginView? colorYellow : const Color(0xff2e344d),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                body: MouseRegion(
+                  onEnter: (value) {
+                    controller.scrollerIsAble = false;
+                  },
+                  onExit: (value) {
+                    controller.scrollerIsAble = true;
+                  },
+                  child: Column(
+                    children: [
+                      Obx(() {
+                        return Container(
+                          height: 26,
+                          padding: EdgeInsets.only(left: 12, right: 6),
+                          color: controller.loginView? colorYellow : const Color(0xff2e344d),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TimerBuilder.periodic(
+                                const Duration(minutes: 1),
+                                builder: (context) {
+                                  return Text('SKT ' +
+                                      formatDate(DateTime.now(), [h, ':', nn]),
+                                    style: TextStyle(color: controller.loginView? colorBlack : Colors.white),
+                                  );
+                                },
+                              ),
+                              Spacer(),
+                              Icon(Icons.five_g, size: 16, color: controller.loginView? colorBlack : Colors.white,),
+                              Icon(Icons.bluetooth, size: 16, color: controller.loginView? colorBlack : Colors.white,),
+                              Icon(Icons.access_alarm, size: 14, color: controller.loginView? colorBlack : Colors.white,),
+                              SizedBox(width: 2,),
+                              Icon(Icons.volume_off, size: 16, color: controller.loginView? colorBlack : Colors.white,),
+                              SizedBox(width: 2,),
+                              Icon(Icons.wifi, size: 16, color: controller.loginView? colorBlack : Colors.white,),
+                              Icon(Icons.signal_cellular_alt, size: 16, color: controller.loginView? colorBlack : Colors.white,),
+                              Icon(Icons.battery_charging_full, size: 16, color: controller.loginView? colorBlack : Colors.white,),
+                              // TextButton(onPressed: () {
+                              //   controller.loginView = true;
+                              // }, child: Text('logout', style: TextStyle(color: controller.loginView? colorBlack : Colors.white),))
+                            ],
+                          ),
+                        );
+                      }),
+                      Expanded(
+                        child: Stack(
                           children: [
-                            TimerBuilder.periodic(
-                              const Duration(minutes: 1),
-                              builder: (context) {
-                                return Text('SKT ' +
-                                    formatDate(DateTime.now(), [h, ':', nn]),
-                                  style: TextStyle(color: controller.loginView? colorBlack : Colors.white),
-                                );
-                              },
-                            ),
-                            Spacer(),
-                            Icon(Icons.five_g, size: 16, color: controller.loginView? colorBlack : Colors.white,),
-                            Icon(Icons.bluetooth, size: 16, color: controller.loginView? colorBlack : Colors.white,),
-                            Icon(Icons.access_alarm, size: 14, color: controller.loginView? colorBlack : Colors.white,),
-                            SizedBox(width: 2,),
-                            Icon(Icons.volume_off, size: 16, color: controller.loginView? colorBlack : Colors.white,),
-                            SizedBox(width: 2,),
-                            Icon(Icons.wifi, size: 16, color: controller.loginView? colorBlack : Colors.white,),
-                            Icon(Icons.signal_cellular_alt, size: 16, color: controller.loginView? colorBlack : Colors.white,),
-                            Icon(Icons.battery_charging_full, size: 16, color: controller.loginView? colorBlack : Colors.white,),
-                            // TextButton(onPressed: () {
-                            //   controller.loginView = true;
-                            // }, child: Text('logout', style: TextStyle(color: controller.loginView? colorBlack : Colors.white),))
-                          ],
-                        ),
-                      );
-                    }),
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          Obx(() {
-                            return AnimatedPositioned(
-                              curve: Curves.ease,
-                              duration: Duration(milliseconds: 300),
-                              right: 0,
-                              left: 0,
-                              top: controller.loginView? 774 : 0,
-                              bottom: controller.loginView? -774 : 0,
-                              child: DefaultTabController(
-                                length: 4,
-                                child: Scaffold(
-                                  // appBar: AppBar(
-                                  //   title: Text('kakao bank'),
-                                  //   backgroundColor: const Color(0xff2e344d),
-                                  // ),
-                                  bottomNavigationBar: TabBar(
-                                    controller: controller.kbTabController,
-                                    tabs: [
-                                      Tab(icon: Obx(() {
-                                        return controller.kbTabIndex == 0? Icon(Icons.person, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.person, color: Color(0xffb2b2b2), size: 29);
-                                      })),
-                                      Tab(icon: Obx(() {
-                                        return controller.kbTabIndex == 1? Icon(Icons.grid_view, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.grid_view, color: Color(0xffb2b2b2), size: 29);
-                                      })),
-                                      Tab(icon: Obx(() {
-                                        return controller.kbTabIndex == 2? Icon(Icons.notifications, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.notifications, color: Color(0xffb2b2b2), size: 29);
-                                      })),
-                                      Tab(icon: Obx(() {
-                                        return controller.kbTabIndex == 3? Icon(Icons.more_horiz, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.more_horiz, color: Color(0xffb2b2b2), size: 29);
-                                      })),
-                                    ],
-                                    indicatorColor: Colors.transparent,
-                                  ),
-                                  body: TabBarView(
-                                    controller: controller.kbTabController,
-                                    children: [
-                                      KeepAliveWrapper(child: KakaoBankUserWidget()),
-                                      KeepAliveWrapper(child: KakaoBankItemWidget()),
-                                      KeepAliveWrapper(child: KakaoBankNotiWidget()),
-                                      KeepAliveWrapper(child: KakaoBankInfoWidget()),
-                                    ],
+                            Obx(() {
+                              return AnimatedPositioned(
+                                curve: Curves.ease,
+                                duration: Duration(milliseconds: 300),
+                                right: 0,
+                                left: 0,
+                                top: controller.loginView? 774 : 0,
+                                bottom: controller.loginView? -774 : 0,
+                                child: DefaultTabController(
+                                  length: 4,
+                                  child: Scaffold(
+                                    // appBar: AppBar(
+                                    //   title: Text('kakao bank'),
+                                    //   backgroundColor: const Color(0xff2e344d),
+                                    // ),
+                                    bottomNavigationBar: TabBar(
+                                      controller: controller.kbTabController,
+                                      tabs: [
+                                        Tab(icon: Obx(() {
+                                          return controller.kbTabIndex == 0? Icon(Icons.person, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.person, color: Color(0xffb2b2b2), size: 29);
+                                        })),
+                                        Tab(icon: Obx(() {
+                                          return controller.kbTabIndex == 1? Icon(Icons.grid_view, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.grid_view, color: Color(0xffb2b2b2), size: 29);
+                                        })),
+                                        Tab(icon: Obx(() {
+                                          return controller.kbTabIndex == 2? Icon(Icons.notifications, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.notifications, color: Color(0xffb2b2b2), size: 29);
+                                        })),
+                                        Tab(icon: Obx(() {
+                                          return controller.kbTabIndex == 3? Icon(Icons.more_horiz, color: Color(0xff1f1f1f), size: 29) : Icon(Icons.more_horiz, color: Color(0xffb2b2b2), size: 29);
+                                        })),
+                                      ],
+                                      indicatorColor: Colors.transparent,
+                                    ),
+                                    body: TabBarView(
+                                      controller: controller.kbTabController,
+                                      children: [
+                                        KeepAliveWrapper(child: KakaoBankUserWidget()),
+                                        KeepAliveWrapper(child: KakaoBankItemWidget()),
+                                        KeepAliveWrapper(child: KakaoBankNotiWidget()),
+                                        KeepAliveWrapper(child: KakaoBankInfoWidget()),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          }),
-                          KakaoBankSampleWidget(),
-                          KakaoBankLoginWidget()
-                        ],
+                              );
+                            }),
+                            KakaoBankSampleWidget(),
+                            KakaoBankLoginWidget()
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             )

@@ -53,7 +53,6 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   get kbUserImageSize => this._kbUserImageSize.value;
   set kbUserImageSize(value) => this._kbUserImageSize.value = value;
 
-
   var _kbItemScrollMove = false.obs;
   get kbItemScrollMove => this._kbItemScrollMove.value;
   set kbItemScrollMove(value) => this._kbItemScrollMove.value = value;
@@ -124,6 +123,10 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   var _sampleText = 'sample'.obs;
   get sampleText => this._sampleText.value;
   set sampleText(value) => this._sampleText.value = value;
+
+  var _scrollerIsAble = true.obs;
+  get scrollerIsAble => this._scrollerIsAble.value;
+  set scrollerIsAble(value) => this._scrollerIsAble.value = value;
 
   @override
   void onInit() {
