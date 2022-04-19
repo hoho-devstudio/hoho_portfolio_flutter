@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hoho_portfolio_flutter/app/ui/theme/app_colors.dart';
 import 'package:intl/intl.dart';
 
 import '../../../controller/main_controller.dart';
@@ -8,6 +9,13 @@ class KakaoBankUserWidget extends GetView<MainController> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      if (controller.test) {
+        controller.test = false;
+        sendPopup(context, 1, 2);
+      }
+    });
+    return Container();
     return Container(
       color: const Color(0xff2e344d),
       child: Column(
@@ -165,7 +173,7 @@ class KakaoBankUserWidget extends GetView<MainController> {
                         TextButton(
                             style: TextButton.styleFrom(primary: Colors.black),
                             onPressed: () {
-                              sendPopup(context, type);
+                              selectPopup(context, type);
                             }, child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Text('이체', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
@@ -374,79 +382,163 @@ class KakaoBankUserWidget extends GetView<MainController> {
     );
   }
 
-  void sendPopup(BuildContext context, int sendType) {
-    var sendName = '';
-    switch (sendType) {
-      case 1: sendName = '김지호의 통장'; break;
-      case 2: sendName = '가족통장'; break;
-      case 3: sendName = '데이트통장'; break;
-    }
-
+  void selectPopup(BuildContext context, int sendType) {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              sendType != 1? itemSendWidget(context, '$sendName -> 김지호의 통장으로 1,000,000원 이체', sendType, 1, 1000000) : Container(),
-              sendType != 2? itemSendWidget(context, '$sendName -> 가족통장으로 1,000,000원 이체', sendType, 2, 1000000) : Container(),
-              sendType != 3? itemSendWidget(context, '$sendName -> 데이트통장으로 1,000,000원 이체', sendType, 3, 1000000) : Container(),
-            ],
-          );
-        });
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30))
+      ),
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(top: 7),
+              width: 40,
+              height: 5,
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(12)
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20, bottom: 25, left: 24),
+              alignment: Alignment.centerLeft,
+              child: Text('받는계좌 선택', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+            ),
+            sendType != 1? itemSendWidget(context, '[김지호의 통장 ⭐️️] 김지호', sendType, 1, 1000000) : Container(),
+            sendType != 2? itemSendWidget(context, '[가족통장 👨‍👩‍👧‍👦] 김지호', sendType, 2, 1000000) : Container(),
+            sendType != 3? itemSendWidget(context, '[데이트통장 💕️️] 김지호', sendType, 3, 1000000) : Container(),
+            SizedBox(height: 25,)
+          ],
+        );
+      });
   }
 
   Widget itemSendWidget(BuildContext context, String title, int sendType, int receiveType, int money) {
     return TextButton(
         style: TextButton.styleFrom(primary: Colors.black),
         onPressed: () {
-          var sendMoney = 0;
-          switch (sendType) {
-            case 1: sendMoney = controller.kbUserMoney1; break;
-            case 2: sendMoney = controller.kbUserMoney2; break;
-            case 3: sendMoney = controller.kbUserMoney3; break;
-          }
-
-          if (sendMoney < money) {
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                behavior: SnackBarBehavior.floating,
-                content: Text('이체 금액이 부족합니다.', style: TextStyle(fontFamily: 'Noto'),)
-              )
-            );
-            Navigator.pop(context);
-            return;
-          }
-
-          switch (sendType) {
-            case 1: controller.kbUserMoney1 -= money; break;
-            case 2: controller.kbUserMoney2 -= money; break;
-            case 3: controller.kbUserMoney3 -= money; break;
-          }
-
-          var receiveName = '';
-          switch (receiveType) {
-            case 1: controller.kbUserMoney1 += money; receiveName = '김지호의 통장'; break;
-            case 2: controller.kbUserMoney2 += money; receiveName = '가족통장'; break;
-            case 3: controller.kbUserMoney3 += money; receiveName = '데이트통장'; break;
-          }
-
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                  behavior: SnackBarBehavior.floating,
-                  content: Text('$receiveName으로 1,000,000원을 이체하였습니다.', style: TextStyle(fontFamily: 'Noto'),)
-              )
-          );
           Navigator.pop(context);
+          sendPopup(context, sendType, receiveType);
         },
-        child: Container(
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-          child: Text(title, style: TextStyle(fontSize: 16)),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+                      width: 45,
+                      height: 45,
+                      decoration: const BoxDecoration(
+                          color: colorYellow,
+                          shape: BoxShape.circle,
+                      ),
+                    ),
+                    Image(
+                      width: 20,
+                      height: 20,
+                      image: AssetImage('assets/images/kakaobank_icon_m.png'),
+                    )
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title, style: TextStyle(fontSize: 14)),
+                      SizedBox(height: 2,),
+                      Text('카카오뱅크 3333-01-1234567', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
         )
     );
+  }
+
+  void sendPopup(BuildContext context, int sendType, int receiveType) {
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(30))
+        ),
+        context: context,
+        builder: (context) {
+          return Container(
+            height: double.infinity,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(top: 7),
+                  width: 40,
+                  height: 5,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12)
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 25, left: 24),
+                  alignment: Alignment.centerLeft,
+                  child: Text('이체금액', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
+                ),
+                TextButton(onPressed: () {
+                  var money = 10000;
+                  var sendMoney = 0;
+                  switch (sendType) {
+                    case 1: sendMoney = controller.kbUserMoney1; break;
+                    case 2: sendMoney = controller.kbUserMoney2; break;
+                    case 3: sendMoney = controller.kbUserMoney3; break;
+                  }
+
+                  if (sendMoney < money) {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text('이체 금액이 부족합니다.', style: TextStyle(fontFamily: 'Noto'),)
+                        )
+                    );
+                    Navigator.pop(context);
+                    return;
+                  }
+
+                  switch (sendType) {
+                    case 1: controller.kbUserMoney1 -= money; break;
+                    case 2: controller.kbUserMoney2 -= money; break;
+                    case 3: controller.kbUserMoney3 -= money; break;
+                  }
+
+                  var receiveName = '';
+                  switch (receiveType) {
+                    case 1: controller.kbUserMoney1 += money; receiveName = '김지호의 통장'; break;
+                    case 2: controller.kbUserMoney2 += money; receiveName = '가족통장'; break;
+                    case 3: controller.kbUserMoney3 += money; receiveName = '데이트통장'; break;
+                  }
+
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          content: Text('$receiveName으로 1,000,000원을 이체하였습니다.', style: TextStyle(fontFamily: 'Noto'),)
+                      )
+                  );
+                  Navigator.pop(context);
+                }, child: Text('이체')),
+                SizedBox(height: 25,)
+              ],
+            ),
+          );
+        }
+      );
   }
 
 }
