@@ -22,14 +22,6 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   var kbItemPage = 0;
   var kbItemChanging = false;
 
-  var _kbUserMoney = [100000.obs, 0.obs, 0.obs];
-  get kbUserMoney1 => this._kbUserMoney[0].value;
-  get kbUserMoney2 => this._kbUserMoney[1].value;
-  get kbUserMoney3 => this._kbUserMoney[2].value;
-  set kbUserMoney1(value) => this._kbUserMoney[0].value = value;
-  set kbUserMoney2(value) => this._kbUserMoney[1].value = value;
-  set kbUserMoney3(value) => this._kbUserMoney[2].value = value;
-
   var _kbTopHeight = [80.obs, 80.obs, 80.obs, 80.obs];
   get kbUserTopHeight => this._kbTopHeight[0].value;
   get kbItemTopHeight => this._kbTopHeight[1].value;
@@ -128,6 +120,24 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   var _scrollerIsAble = true.obs;
   get scrollerIsAble => this._scrollerIsAble.value;
   set scrollerIsAble(value) => this._scrollerIsAble.value = value;
+
+  var _kbUserMoney = [100000.obs, 0.obs, 0.obs, 0.obs];
+  get kbUserMoney1 => this._kbUserMoney[0].value;
+  get kbUserMoney2 => this._kbUserMoney[1].value;
+  get kbUserMoney3 => this._kbUserMoney[2].value;
+  get kbUserMoneySend => this._kbUserMoney[3].value;
+  set kbUserMoney1(value) => this._kbUserMoney[0].value = value;
+  set kbUserMoney2(value) => this._kbUserMoney[1].value = value;
+  set kbUserMoney3(value) => this._kbUserMoney[2].value = value;
+  set kbUserMoneySend(value) => this._kbUserMoney[3].value = value;
+
+  var _moneyText = false.obs;
+  get moneyText => this._moneyText.value;
+  set moneyText(value) => this._moneyText.value = value;
+
+  var _isMoneyOver = false.obs;
+  get isMoneyOver => this._isMoneyOver.value;
+  set isMoneyOver(value) => this._isMoneyOver.value = value;
 
   @override
   void onInit() {

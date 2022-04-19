@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hoho_portfolio_flutter/app/ui/theme/app_colors.dart';
@@ -15,7 +16,6 @@ class KakaoBankUserWidget extends GetView<MainController> {
         sendPopup(context, 1, 2);
       }
     });
-    return Container();
     return Container(
       color: const Color(0xff2e344d),
       child: Column(
@@ -406,16 +406,16 @@ class KakaoBankUserWidget extends GetView<MainController> {
               alignment: Alignment.centerLeft,
               child: Text('받는계좌 선택', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
             ),
-            sendType != 1? itemSendWidget(context, '[김지호의 통장 ⭐️️] 김지호', sendType, 1, 1000000) : Container(),
-            sendType != 2? itemSendWidget(context, '[가족통장 👨‍👩‍👧‍👦] 김지호', sendType, 2, 1000000) : Container(),
-            sendType != 3? itemSendWidget(context, '[데이트통장 💕️️] 김지호', sendType, 3, 1000000) : Container(),
+            sendType != 1? itemSendWidget(context, '[김지호의 통장 ⭐️️] 김지호', '3333-01-1234567', sendType, 1, 1000000) : Container(),
+            sendType != 2? itemSendWidget(context, '[가족통장 👨‍👩‍👧‍👦] 김지호', '3333-02-1234567', sendType, 2, 1000000) : Container(),
+            sendType != 3? itemSendWidget(context, '[데이트통장 💕️️] 김지호', '3333-03-1234567', sendType, 3, 1000000) : Container(),
             SizedBox(height: 25,)
           ],
         );
       });
   }
 
-  Widget itemSendWidget(BuildContext context, String title, int sendType, int receiveType, int money) {
+  Widget itemSendWidget(BuildContext context, String title, String account, int sendType, int receiveType, int money) {
     return TextButton(
         style: TextButton.styleFrom(primary: Colors.black),
         onPressed: () {
@@ -426,24 +426,26 @@ class KakaoBankUserWidget extends GetView<MainController> {
           children: [
             Row(
               children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-                      width: 45,
-                      height: 45,
-                      decoration: const BoxDecoration(
-                          color: colorYellow,
-                          shape: BoxShape.circle,
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: 45,
+                        height: 45,
+                        decoration: const BoxDecoration(
+                            color: colorYellow,
+                            shape: BoxShape.circle,
+                        ),
                       ),
-                    ),
-                    Image(
-                      width: 20,
-                      height: 20,
-                      image: AssetImage('assets/images/kakaobank_icon_m.png'),
-                    )
-                  ],
+                      Image(
+                        width: 20,
+                        height: 20,
+                        image: AssetImage('assets/images/kakaobank_icon_m.png'),
+                      )
+                    ],
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -453,7 +455,7 @@ class KakaoBankUserWidget extends GetView<MainController> {
                     children: [
                       Text(title, style: TextStyle(fontSize: 14)),
                       SizedBox(height: 2,),
-                      Text('카카오뱅크 3333-01-1234567', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                      Text('카카오뱅크 $account', style: TextStyle(fontSize: 12, color: Colors.grey)),
                     ],
                   ),
                 ),
@@ -465,80 +467,390 @@ class KakaoBankUserWidget extends GetView<MainController> {
   }
 
   void sendPopup(BuildContext context, int sendType, int receiveType) {
+    var f = NumberFormat('###,###,###,###');
+    var sendMoney;
+    switch (sendType) {
+      case 1: sendMoney = controller.kbUserMoney1; break;
+      case 2: sendMoney = controller.kbUserMoney2; break;
+      case 3: sendMoney = controller.kbUserMoney3; break;
+    }
+
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(30))
         ),
         context: context,
+        isScrollControlled: true,
         builder: (context) {
-          return Container(
-            height: double.infinity,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 7),
-                  width: 40,
-                  height: 5,
-                  decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(12)
+          return FractionallySizedBox(
+            heightFactor: 0.9,
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 35,),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              width: 22,
+                              height: 22,
+                              decoration: const BoxDecoration(
+                                color: colorYellow,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            Image(
+                              width: 12,
+                              height: 12,
+                              image: AssetImage('assets/images/kakaobank_icon_m.png'),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 8,),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Text('김지호 3333-0$receiveType-1234567', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                      ),
+                      SizedBox(width: 4,),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Text('계좌로', style: TextStyle(fontSize: 16),),
+                      ),
+                    ],
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20, bottom: 25, left: 24),
-                  alignment: Alignment.centerLeft,
-                  child: Text('이체금액', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-                ),
-                TextButton(onPressed: () {
-                  var money = 10000;
-                  var sendMoney = 0;
-                  switch (sendType) {
-                    case 1: sendMoney = controller.kbUserMoney1; break;
-                    case 2: sendMoney = controller.kbUserMoney2; break;
-                    case 3: sendMoney = controller.kbUserMoney3; break;
-                  }
-
-                  if (sendMoney < money) {
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            behavior: SnackBarBehavior.floating,
-                            content: Text('이체 금액이 부족합니다.', style: TextStyle(fontFamily: 'Noto'),)
-                        )
+                  SizedBox(height: 40,),
+                  Obx(() {
+                    return Container(
+                      height: 125,
+                      child: Column(
+                        children: [
+                          controller.moneyText? Text('${f.format(controller.kbUserMoneySend)}원', style: TextStyle(fontSize: 28, color: controller.isMoneyOver? Colors.red : Colors.black),) : Text('보낼 금액', style: TextStyle(color: Colors.grey, fontSize: 28),),
+                          SizedBox(height: 20,),
+                          controller.moneyText? Text(controller.isMoneyOver? '출금계좌 잔액을 초과하였습니다.' : moneyTransKo(), style: TextStyle(color: Colors.grey, fontSize: 12),) : Container(
+                            padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                            decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        width: 22,
+                                        height: 22,
+                                        decoration: const BoxDecoration(
+                                          color: colorYellow,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      Image(
+                                        width: 12,
+                                        height: 12,
+                                        image: AssetImage('assets/images/kakaobank_icon_m.png'),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width: 5,),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 2),
+                                  child: Text('출금가능금액 : ', style: TextStyle(fontSize: 12, color: Colors.grey),),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 2),
+                                  child: Text('${f.format(sendMoney)}원', style: TextStyle(fontSize: 12, decoration: TextDecoration.underline, fontWeight: FontWeight.bold),),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     );
-                    Navigator.pop(context);
-                    return;
-                  }
+                  }),
+                  Expanded(
+                    child: Container(
+                      color: Colors.yellow,
+                      width: double.infinity,
+                      child: Stack(
+                        children: [
+                          Container(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              height: 250,
+                              child: Stack(
+                                children: [
+                                  itemSendMoney(Alignment.topLeft, '1'),
+                                  itemSendMoney(Alignment.topCenter, '2'),
+                                  itemSendMoney(Alignment.topRight, '3'),
+                                  itemSendMoney(Alignment.bottomLeft, '4'),
+                                  itemSendMoney(Alignment.bottomCenter, '5'),
+                                  itemSendMoney(Alignment.bottomRight, '6'),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              height: 250,
+                              child: Stack(
+                                children: [
+                                  itemSendMoney(Alignment.topLeft, '7'),
+                                  itemSendMoney(Alignment.topCenter, '8'),
+                                  itemSendMoney(Alignment.topRight, '9'),
+                                  Container(
+                                    transform: Matrix4.translationValues(0.0, -9.0, 0.0),
+                                    child: itemSendMoney(Alignment.bottomLeft, '00', padding: 58)
+                                  ),
+                                  itemSendMoney(Alignment.bottomCenter, '0'),
+                                  itemSendMoney(Alignment.bottomRight, '←'),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 60,
+                    color: Colors.grey.withOpacity(0.2),
+                    child: TextButton(
+                      style: TextButton.styleFrom(primary: Colors.black),
+                      child: Text('다음', style: TextStyle(color: Colors.grey, fontSize: 16),),
+                      onPressed: () {
+                        var money = 10000;
+                        var sendMoney = 0;
+                        switch (sendType) {
+                          case 1: sendMoney = controller.kbUserMoney1; break;
+                          case 2: sendMoney = controller.kbUserMoney2; break;
+                          case 3: sendMoney = controller.kbUserMoney3; break;
+                        }
 
-                  switch (sendType) {
-                    case 1: controller.kbUserMoney1 -= money; break;
-                    case 2: controller.kbUserMoney2 -= money; break;
-                    case 3: controller.kbUserMoney3 -= money; break;
-                  }
+                        if (sendMoney < money) {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  behavior: SnackBarBehavior.floating,
+                                  content: Text('이체 금액이 부족합니다.', style: TextStyle(fontFamily: 'Noto'),)
+                              )
+                          );
+                          Navigator.pop(context);
+                          return;
+                        }
 
-                  var receiveName = '';
-                  switch (receiveType) {
-                    case 1: controller.kbUserMoney1 += money; receiveName = '김지호의 통장'; break;
-                    case 2: controller.kbUserMoney2 += money; receiveName = '가족통장'; break;
-                    case 3: controller.kbUserMoney3 += money; receiveName = '데이트통장'; break;
-                  }
+                        switch (sendType) {
+                          case 1: controller.kbUserMoney1 -= money; break;
+                          case 2: controller.kbUserMoney2 -= money; break;
+                          case 3: controller.kbUserMoney3 -= money; break;
+                        }
 
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          behavior: SnackBarBehavior.floating,
-                          content: Text('$receiveName으로 1,000,000원을 이체하였습니다.', style: TextStyle(fontFamily: 'Noto'),)
-                      )
-                  );
-                  Navigator.pop(context);
-                }, child: Text('이체')),
-                SizedBox(height: 25,)
-              ],
+                        var receiveName = '';
+                        switch (receiveType) {
+                          case 1: controller.kbUserMoney1 += money; receiveName = '김지호의 통장'; break;
+                          case 2: controller.kbUserMoney2 += money; receiveName = '가족통장'; break;
+                          case 3: controller.kbUserMoney3 += money; receiveName = '데이트통장'; break;
+                        }
+
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                behavior: SnackBarBehavior.floating,
+                                content: Text('$receiveName으로 1,000,000원을 이체하였습니다.', style: TextStyle(fontFamily: 'Noto'),)
+                            )
+                        );
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }
       );
   }
+
+  Widget itemSendMoney(Alignment alignment, String text, {double padding = 65}) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      alignment: alignment,
+      child: RawMaterialButton(
+        onPressed: () {
+          
+
+          switch (text) {
+            case '1': {
+              plus(1);
+              break;
+            }
+            case '2': {
+              plus(2);
+              break;
+            }
+            case '3': {
+              plus(3);
+              break;
+            }
+            case '4': {
+              plus(4);
+              break;
+            }
+            case '5': {
+              plus(5);
+              break;
+            }
+            case '6': {
+              plus(6);
+              break;
+            }
+            case '7': {
+              plus(7);
+              break;
+            }
+            case '8': {
+              plus(8);
+              break;
+            }
+            case '9': {
+              plus(9);
+              break;
+            }
+            case '00': {
+              multiply(2);
+              break;
+            }
+            case '0': {
+              multiply(1);
+              break;
+            }
+            case '←': {
+              minus();
+              break;
+            }
+          }
+
+
+        },
+        child: Text(text, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+        padding: EdgeInsets.all(padding),
+        shape: CircleBorder(),
+      ),
+    );
+  }
+  
+  void plus(int number) {
+    controller.moneyText = true;
+    var money = controller.kbUserMoneySend;
+    print(money);
+    if (money.toString().length > 15) {
+
+    } else if (money != 0) {
+      money = money * 10 + number;
+    } else {
+      money = money + number;
+    }
+    controller.kbUserMoneySend = money;
+  }
+
+  void multiply(int zero) {
+    var money = controller.kbUserMoneySend;
+    print(money);
+    if (money == 0) {
+      controller.moneyText = true;
+    } else if (zero == 1) {
+      money = money * 10;
+    } else if (zero == 2) {
+      money = money * 100;
+    }
+    controller.kbUserMoneySend = money;
+  }
+
+  void minus() {
+    var money = controller.kbUserMoneySend;
+    print(money);
+    if (money == 0) {
+      controller.moneyText = false;
+    } else if (money.toString().length == 1) {
+      money = 0;
+    } else {
+      money = (money * 0.1).round();
+    }
+    controller.kbUserMoneySend = money;
+  }
+
+  String moneyTransKo() {
+    var result = '';
+    var money = controller.kbUserMoneySend;
+    print('money: $money');
+    var moneyLengh = money.toString().length;
+    print('moneyLengh: $moneyLengh');
+    var j;
+    var e;
+    var m;
+    var w;
+    if (money.toString().length > 12) {
+      j = money.toString().substring(moneyLengh-moneyLengh, moneyLengh-12);
+      e = money.toString().substring(moneyLengh-12, moneyLengh-8);
+      m = money.toString().substring(moneyLengh-8, moneyLengh-4);
+      w = money.toString().substring(moneyLengh-4, moneyLengh);
+      // result = '${moneyFormat(j)}조 ${moneyFormat(e)}억 ${moneyFormat(m)}만 ${moneyFormat(w)}원';
+    } else if (money.toString().length > 8) {
+      e = money.toString().substring(moneyLengh-moneyLengh, moneyLengh-8);
+      m = money.toString().substring(moneyLengh-8, moneyLengh-4);
+      w = money.toString().substring(moneyLengh-4, moneyLengh);
+      // result = '${moneyFormat(e)}억 ${moneyFormat(m)}만 ${moneyFormat(w)}원';
+    } else if (money.toString().length > 4) {
+      m = money.toString().substring(moneyLengh-moneyLengh, moneyLengh-4);
+      w = money.toString().substring(moneyLengh-4, moneyLengh);
+      // result = '${moneyFormat(m)}만 ${moneyFormat(w)}원';
+    } else {
+      w = money.toString().substring(moneyLengh-moneyLengh, moneyLengh);
+      // result = '${moneyFormat(w)}원';
+    }
+
+    if (j != null && j != '0') {
+      result += moneyFormat(j) + '조';
+    }
+    if (e != null && e != '0') {
+      if (result.isNotEmpty) result += ' ';
+      result += moneyFormat(e) + '억';
+    }
+    if (m != null && m != '0') {
+      if (result.isNotEmpty) result += ' ';
+      result += moneyFormat(m) + '만';
+    }
+    if (w != null && w != '0') {
+      if (result.isNotEmpty) result += ' ';
+      result += moneyFormat(w) + '원';
+    }
+
+    print('result: $result');
+    return result;
+  }
+
+  String moneyFormat(dynamic number) {
+    var result = '';
+    var f = NumberFormat('###,###,###,###');
+    if (number is String) {
+      return f.format(int.parse(number));
+    } else if (number is int) {
+      return f.format(number);
+    }
+    return result;
+  }
+
+
 
 }
