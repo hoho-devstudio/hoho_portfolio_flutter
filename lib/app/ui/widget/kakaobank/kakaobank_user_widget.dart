@@ -859,25 +859,25 @@ class KakaoBankUserWidget extends GetView<MainController> {
   String moneyTransKo() {
     var result = '';
     var money = controller.kbUserMoneySend;
-    var moneyLengh = money.toString().length;
+    var moneyLength = money.toString().length;
     var j;
     var e;
     var m;
     var w;
-    if (moneyLengh > 12) {
-      j = money.toString().substring(0, moneyLengh-12);
-      e = money.toString().substring(moneyLengh-12, moneyLengh-8);
-      m = money.toString().substring(moneyLengh-8, moneyLengh-4);
-      w = money.toString().substring(moneyLengh-4, moneyLengh);
-    } else if (moneyLengh > 8) {
-      e = money.toString().substring(0, moneyLengh-8);
-      m = money.toString().substring(moneyLengh-8, moneyLengh-4);
-      w = money.toString().substring(moneyLengh-4, moneyLengh);
-    } else if (moneyLengh > 4) {
-      m = money.toString().substring(0, moneyLengh-4);
-      w = money.toString().substring(moneyLengh-4, moneyLengh);
+    if (moneyLength > 12) {
+      j = money.toString().substring(0, moneyLength-12);
+      e = money.toString().substring(moneyLength-12, moneyLength-8);
+      m = money.toString().substring(moneyLength-8, moneyLength-4);
+      w = money.toString().substring(moneyLength-4, moneyLength);
+    } else if (moneyLength > 8) {
+      e = money.toString().substring(0, moneyLength-8);
+      m = money.toString().substring(moneyLength-8, moneyLength-4);
+      w = money.toString().substring(moneyLength-4, moneyLength);
+    } else if (moneyLength > 4) {
+      m = money.toString().substring(0, moneyLength-4);
+      w = money.toString().substring(moneyLength-4, moneyLength);
     } else {
-      w = money.toString().substring(0, moneyLengh);
+      w = money.toString().substring(0, moneyLength);
     }
 
     if (j != null) {
