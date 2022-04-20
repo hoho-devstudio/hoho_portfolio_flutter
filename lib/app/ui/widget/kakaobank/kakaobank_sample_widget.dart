@@ -27,9 +27,23 @@ class KakaoBankSampleWidget extends GetView<MainController> {
                   child: Container(
                     child: Row(
                       children: [
-                        IconButton(onPressed: () {
-                          controller.sampleView = false;
-                        }, icon: Icon(Icons.arrow_back, size: 22,)),
+                        // IconButton(onPressed: () {
+                        //   controller.sampleView = false;
+                        // }, icon: Icon(Icons.arrow_back, size: 22,)),
+                        Container(
+                          width: 60,
+                          child: RawMaterialButton(
+                            onPressed: () {
+                              controller.sampleView = false;
+                            },
+                            shape: CircleBorder(),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Icon(Icons.arrow_back),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 2,),
                         Text(controller.sampleText, style: TextStyle(fontSize: 26, fontFamily: 'Day')),
                       ],
                     ),

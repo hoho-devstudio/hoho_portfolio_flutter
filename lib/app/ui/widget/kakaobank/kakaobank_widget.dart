@@ -15,6 +15,7 @@ import '../../../util/app_scroll_behavior.dart';
 import 'kakaobank_login_widget.dart';
 
 class KakaoBankWidget extends GetView<MainController> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,7 @@ class KakaoBankWidget extends GetView<MainController> {
                 fontFamily: 'Noto',
               ),
               home: Scaffold(
+                key: _scaffoldKey,
                 body: MouseRegion(
                   onEnter: (value) {
                     controller.scrollerIsAble = false;
@@ -121,7 +123,7 @@ class KakaoBankWidget extends GetView<MainController> {
                                     body: TabBarView(
                                       controller: controller.kbTabController,
                                       children: [
-                                        KeepAliveWrapper(child: KakaoBankUserWidget()),
+                                        KeepAliveWrapper(child: KakaoBankUserWidget(_scaffoldKey)),
                                         KeepAliveWrapper(child: KakaoBankItemWidget()),
                                         KeepAliveWrapper(child: KakaoBankNotiWidget()),
                                         KeepAliveWrapper(child: KakaoBankInfoWidget()),

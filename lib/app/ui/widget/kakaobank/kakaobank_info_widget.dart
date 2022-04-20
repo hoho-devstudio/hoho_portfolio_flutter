@@ -159,8 +159,11 @@ class KakaoBankInfoWidget extends GetView<MainController> {
   Widget itemButtonWidget(String image, String title, double imageWidth) {
     return Expanded(
       child: TextButton(
-          style: TextButton.styleFrom(primary: Colors.black),
-          onPressed: () {}, child: Padding(
+        style: TextButton.styleFrom(primary: Colors.black),
+        onPressed: () {
+          controller.sampleText = title;
+          controller.sampleView = true;
+        }, child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
