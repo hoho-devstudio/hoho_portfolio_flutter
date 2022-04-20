@@ -34,16 +34,17 @@ class KakaoBankLoginWidget extends GetView<MainController> {
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
-                          color: Colors.black12.withOpacity(0.1),
-
+                          color: Colors.black.withOpacity(0.1),
                         ),
-                        child: TextButton(onPressed: () {
-                          controller.loginProgress = true;
-                          Future.delayed(Duration(milliseconds: 1300), () {
-                            controller.loginProgress = false;
-                            controller.loginView = false;
-                          });
-                        }, child: Text('로그인', style: TextStyle(color: Colors.black, fontFamily: 'Noto', fontSize: 12, fontWeight: FontWeight.bold),))
+                        child: TextButton(
+                          style: TextButton.styleFrom(primary: Colors.black),
+                          onPressed: () {
+                            controller.loginProgress = true;
+                            Future.delayed(Duration(milliseconds: 1300), () {
+                              controller.loginProgress = false;
+                              controller.loginView = false;
+                            });
+                          }, child: Text('로그인', style: TextStyle(color: Colors.black, fontFamily: 'Noto', fontSize: 13, fontWeight: FontWeight.bold),))
                     ),
                     SizedBox(height: 100,)
                   ],

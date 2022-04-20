@@ -7,7 +7,7 @@ import 'app/util/app_scroll_behavior.dart';
 
 void main() {
   runApp(GetMaterialApp(
-    initialRoute: Routes.ground,
+    initialRoute: Routes.main,
     title: 'hoho\'s portfolio',
     debugShowCheckedModeBanner: false,
     theme: appThemeData,

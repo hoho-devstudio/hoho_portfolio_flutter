@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'dart:math';
 
 class MainController extends GetxController with GetTickerProviderStateMixin{
-  var test = true;
+  var init = true;
 
   late ScrollController scrollerController;
   late TabController tabController;
@@ -105,13 +105,17 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   get loginProgress => this._loginProgress.value;
   set loginProgress(value) => this._loginProgress.value = value;
 
-  var _loginView = false.obs;
+  var _loginView = true.obs;
   get loginView => this._loginView.value;
   set loginView(value) => this._loginView.value = value;
 
   var _sampleView = false.obs;
   get sampleView => this._sampleView.value;
   set sampleView(value) => this._sampleView.value = value;
+
+  var _pushView = false.obs;
+  get pushView => this._pushView.value;
+  set pushView(value) => this._pushView.value = value;
 
   var _sampleText = 'sample'.obs;
   get sampleText => this._sampleText.value;
@@ -121,15 +125,17 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   get scrollerIsAble => this._scrollerIsAble.value;
   set scrollerIsAble(value) => this._scrollerIsAble.value = value;
 
-  var _kbUserMoney = [100000.obs, 0.obs, 0.obs, 0.obs];
+  var _kbUserMoney = [100000.obs, 0.obs, 0.obs, 0.obs, 0.obs];
   get kbUserMoney1 => this._kbUserMoney[0].value;
   get kbUserMoney2 => this._kbUserMoney[1].value;
   get kbUserMoney3 => this._kbUserMoney[2].value;
   get kbUserMoneySend => this._kbUserMoney[3].value;
+  get kbUserMoneyPush => this._kbUserMoney[4].value;
   set kbUserMoney1(value) => this._kbUserMoney[0].value = value;
   set kbUserMoney2(value) => this._kbUserMoney[1].value = value;
   set kbUserMoney3(value) => this._kbUserMoney[2].value = value;
   set kbUserMoneySend(value) => this._kbUserMoney[3].value = value;
+  set kbUserMoneyPush(value) => this._kbUserMoney[4].value = value;
 
   var _moneyText = false.obs;
   get moneyText => this._moneyText.value;
@@ -146,6 +152,8 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   var _userProgress = false.obs;
   get userProgress => this._userProgress.value;
   set userProgress(value) => this._userProgress.value = value;
+
+  late BuildContext userContext;
 
   @override
   void onInit() {

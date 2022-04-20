@@ -10,16 +10,16 @@ import '../../../controller/main_controller.dart';
 import '../../../util/util.dart';
 
 class KakaoBankUserWidget extends GetView<MainController> {
-  KakaoBankUserWidget(this._scaffoldKey);
-  GlobalKey<ScaffoldState> _scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      if (controller.test) {
-        controller.test = false;
+      if (controller.init) {
+        controller.init = false;
+        controller.userContext = context;
+
         // sendPopup(context, 1, 2);
-        // confirmPopup(context, '김지호의 통장', 1000000);
+        // confirmPopup('김지호의 통장', 1000000);
       }
     });
     // return Container();
@@ -149,7 +149,7 @@ class KakaoBankUserWidget extends GetView<MainController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),),
-                          Text('3333-01-1234567', style: TextStyle(fontSize: 10, color: Colors.grey.withOpacity(0.8)),),
+                          Text('3333-0$type-1234567', style: TextStyle(fontSize: 10, color: Colors.grey.withOpacity(0.8)),),
                         ],
                       ),
                     ),
@@ -440,44 +440,40 @@ class KakaoBankUserWidget extends GetView<MainController> {
           Navigator.pop(context);
           sendPopup(context, sendType, receiveType);
         },
-        child: Column(
+        child: Row(
           children: [
-            Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        width: 45,
-                        height: 45,
-                        decoration: const BoxDecoration(
-                            color: colorYellow,
-                            shape: BoxShape.circle,
-                        ),
-                      ),
-                      Image(
-                        width: 20,
-                        height: 20,
-                        image: AssetImage('assets/images/kakaobank_icon_m.png'),
-                      )
-                    ],
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: 45,
+                    height: 45,
+                    decoration: const BoxDecoration(
+                        color: colorYellow,
+                        shape: BoxShape.circle,
+                    ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(title, style: TextStyle(fontSize: 14)),
-                      SizedBox(height: 2,),
-                      Text('카카오뱅크 $account', style: TextStyle(fontSize: 12, color: Colors.grey)),
-                    ],
-                  ),
-                ),
-              ],
+                  Image(
+                    width: 20,
+                    height: 20,
+                    image: AssetImage('assets/images/kakaobank_icon_m.png'),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 5, bottom: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: TextStyle(fontSize: 14)),
+                  SizedBox(height: 2,),
+                  Text('카카오뱅크 $account', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                ],
+              ),
             ),
           ],
         )
@@ -496,6 +492,7 @@ class KakaoBankUserWidget extends GetView<MainController> {
     controller.isMoneySend = false;
     controller.isMoneyOver = false;
     controller.moneyText = false;
+    controller.pushView = false;
 
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
@@ -554,23 +551,6 @@ class KakaoBankUserWidget extends GetView<MainController> {
                           controller.moneyText? Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 500),
-                                transitionBuilder: (Widget child, Animation<double> animation) {
-                                  return ScaleTransition(child: child, scale: animation);
-                                },
-                                child:
-                                // Text(
-                                //   '$_count',
-                                //   key: ValueKey<int>(_count),
-                                //   style: Theme.of(context).textTheme.display1,
-                                // ),
-                                Text(
-                                  '${Util.numberFormat(controller.kbUserMoneySend)}',
-                                  key: ValueKey<String>(Util.numberFormat(controller.kbUserMoneySend)),
-                                  // style: Theme.of(context).textTheme.display1,
-                                   style: TextStyle(fontSize: 28, color: controller.isMoneyOver? Colors.red : Colors.black),),
-                              ),
                               Text('${Util.numberFormat(controller.kbUserMoneySend)}', style: TextStyle(fontSize: 28, color: controller.isMoneyOver? Colors.red : Colors.black),),
                               Text('원', style: TextStyle(fontSize: 28, color: Colors.black),),
                             ],
@@ -677,6 +657,7 @@ class KakaoBankUserWidget extends GetView<MainController> {
                           if (!controller.isMoneySend) return;
 
                           var sendMoney = controller.kbUserMoneySend;
+                          controller.kbUserMoneyPush = sendMoney;
 
                           switch (sendType) {
                             case 1: controller.kbUserMoney1 -= sendMoney; break;
@@ -694,17 +675,17 @@ class KakaoBankUserWidget extends GetView<MainController> {
                           Navigator.pop(context);
 
                           controller.userProgress = true;
-                          Future.delayed(Duration(milliseconds: 1200), () {
+                          Future.delayed(Duration(milliseconds: 900), () {
                             controller.userProgress = false;
+                          });
+                          Future.delayed(Duration(milliseconds: 1200), () {
                             confirmPopup(receiveName, sendMoney);
-
-                            ScaffoldMessenger.of(_scaffoldKey.currentContext!).hideCurrentSnackBar();
-                            ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(
-                                SnackBar(
-                                  behavior: SnackBarBehavior.floating,
-                                  content: Text('$receiveName으로 ${Util.numberFormat(sendMoney)}원을 이체하였습니다.', style: TextStyle(fontFamily: 'Noto'),),
-                                )
-                            );
+                          });
+                          Future.delayed(Duration(milliseconds: 2200), () {
+                            controller.pushView = true;
+                          });
+                          Future.delayed(Duration(milliseconds: 8000), () {
+                            controller.pushView = false;
                           });
 
                         },
@@ -720,9 +701,17 @@ class KakaoBankUserWidget extends GetView<MainController> {
   }
 
   void confirmPopup(String receiveName, int sendMoney) {
+    ScaffoldMessenger.of(controller.userContext).hideCurrentSnackBar();
+    ScaffoldMessenger.of(controller.userContext).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text('$receiveName으로 ${Util.numberFormat(sendMoney)}원을 이체하였습니다.', style: TextStyle(fontFamily: 'Noto'),),
+        )
+    );
+
     showDialog(
       useRootNavigator: false,
-      context: _scaffoldKey.currentContext!,
+      context: controller.userContext,
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
@@ -759,6 +748,7 @@ class KakaoBankUserWidget extends GetView<MainController> {
                   child: TextButton(
                       style: TextButton.styleFrom(primary: Colors.black),
                       onPressed: () {
+
                         Navigator.pop(context);
                       }, child: Text('확인')),
                 )
