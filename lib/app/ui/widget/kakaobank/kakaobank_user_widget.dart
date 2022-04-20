@@ -468,12 +468,17 @@ class KakaoBankUserWidget extends GetView<MainController> {
 
   void sendPopup(BuildContext context, int sendType, int receiveType) {
     var f = NumberFormat('###,###,###,###');
-    var sendMoney;
+    var currentMoney;
     switch (sendType) {
-      case 1: sendMoney = controller.kbUserMoney1; break;
-      case 2: sendMoney = controller.kbUserMoney2; break;
-      case 3: sendMoney = controller.kbUserMoney3; break;
+      case 1: currentMoney = controller.kbUserMoney1; break;
+      case 2: currentMoney = controller.kbUserMoney2; break;
+      case 3: currentMoney = controller.kbUserMoney3; break;
     }
+
+    controller.kbUserMoneySend = 0;
+    controller.isMoneySend = false;
+    controller.isMoneyOver = false;
+    controller.moneyText = false;
 
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
@@ -529,7 +534,13 @@ class KakaoBankUserWidget extends GetView<MainController> {
                       height: 125,
                       child: Column(
                         children: [
-                          controller.moneyText? Text('${f.format(controller.kbUserMoneySend)}원', style: TextStyle(fontSize: 28, color: controller.isMoneyOver? Colors.red : Colors.black),) : Text('보낼 금액', style: TextStyle(color: Colors.grey, fontSize: 28),),
+                          controller.moneyText? Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text('${f.format(controller.kbUserMoneySend)}', style: TextStyle(fontSize: 28, color: controller.isMoneyOver? Colors.red : Colors.black),),
+                              Text('원', style: TextStyle(fontSize: 28, color: Colors.black),),
+                            ],
+                          ) : Text('보낼 금액', style: TextStyle(color: Colors.grey, fontSize: 28),),
                           SizedBox(height: 20,),
                           controller.moneyText? Text(controller.isMoneyOver? '출금계좌 잔액을 초과하였습니다.' : moneyTransKo(), style: TextStyle(color: Colors.grey, fontSize: 12),) : Container(
                             padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -567,7 +578,7 @@ class KakaoBankUserWidget extends GetView<MainController> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 2),
-                                  child: Text('${f.format(sendMoney)}원', style: TextStyle(fontSize: 12, decoration: TextDecoration.underline, fontWeight: FontWeight.bold),),
+                                  child: Text('${f.format(currentMoney)}원', style: TextStyle(fontSize: 12, decoration: TextDecoration.underline, fontWeight: FontWeight.bold),),
                                 ),
                               ],
                             ),
@@ -578,7 +589,6 @@ class KakaoBankUserWidget extends GetView<MainController> {
                   }),
                   Expanded(
                     child: Container(
-                      color: Colors.yellow,
                       width: double.infinity,
                       child: Stack(
                         children: [
@@ -588,12 +598,12 @@ class KakaoBankUserWidget extends GetView<MainController> {
                               height: 250,
                               child: Stack(
                                 children: [
-                                  itemSendMoney(Alignment.topLeft, '1'),
-                                  itemSendMoney(Alignment.topCenter, '2'),
-                                  itemSendMoney(Alignment.topRight, '3'),
-                                  itemSendMoney(Alignment.bottomLeft, '4'),
-                                  itemSendMoney(Alignment.bottomCenter, '5'),
-                                  itemSendMoney(Alignment.bottomRight, '6'),
+                                  itemSendMoney(Alignment.topLeft, '1', currentMoney),
+                                  itemSendMoney(Alignment.topCenter, '2', currentMoney),
+                                  itemSendMoney(Alignment.topRight, '3', currentMoney),
+                                  itemSendMoney(Alignment.bottomLeft, '4', currentMoney),
+                                  itemSendMoney(Alignment.bottomCenter, '5', currentMoney),
+                                  itemSendMoney(Alignment.bottomRight, '6', currentMoney),
                                 ],
                               ),
                             ),
@@ -604,15 +614,15 @@ class KakaoBankUserWidget extends GetView<MainController> {
                               height: 250,
                               child: Stack(
                                 children: [
-                                  itemSendMoney(Alignment.topLeft, '7'),
-                                  itemSendMoney(Alignment.topCenter, '8'),
-                                  itemSendMoney(Alignment.topRight, '9'),
+                                  itemSendMoney(Alignment.topLeft, '7', currentMoney),
+                                  itemSendMoney(Alignment.topCenter, '8', currentMoney),
+                                  itemSendMoney(Alignment.topRight, '9', currentMoney),
                                   Container(
                                     transform: Matrix4.translationValues(0.0, -9.0, 0.0),
-                                    child: itemSendMoney(Alignment.bottomLeft, '00', padding: 58)
+                                    child: itemSendMoney(Alignment.bottomLeft, '00', currentMoney, padding: 58)
                                   ),
-                                  itemSendMoney(Alignment.bottomCenter, '0'),
-                                  itemSendMoney(Alignment.bottomRight, '←'),
+                                  itemSendMoney(Alignment.bottomCenter, '0', currentMoney),
+                                  itemSendMoney(Alignment.bottomRight, '←', currentMoney),
                                 ],
                               ),
                             ),
@@ -621,58 +631,44 @@ class KakaoBankUserWidget extends GetView<MainController> {
                       ),
                     )
                   ),
-                  Container(
-                    width: double.infinity,
-                    height: 60,
-                    color: Colors.grey.withOpacity(0.2),
-                    child: TextButton(
-                      style: TextButton.styleFrom(primary: Colors.black),
-                      child: Text('다음', style: TextStyle(color: Colors.grey, fontSize: 16),),
-                      onPressed: () {
-                        var money = 10000;
-                        var sendMoney = 0;
-                        switch (sendType) {
-                          case 1: sendMoney = controller.kbUserMoney1; break;
-                          case 2: sendMoney = controller.kbUserMoney2; break;
-                          case 3: sendMoney = controller.kbUserMoney3; break;
-                        }
+                  Obx(() {
+                    return Container(
+                      width: double.infinity,
+                      height: 60,
+                      color: controller.isMoneySend? colorYellow : Colors.grey.withOpacity(0.2),
+                      child: TextButton(
+                        style: TextButton.styleFrom(primary: Colors.black),
+                        child: Text('다음', style: TextStyle(color: controller.isMoneySend? Colors.black : Colors.grey, fontSize: 16),),
+                        onPressed: () {
+                          if (!controller.isMoneySend) return;
 
-                        if (sendMoney < money) {
+                          var sendMoney = controller.kbUserMoneySend;
+
+                          switch (sendType) {
+                            case 1: controller.kbUserMoney1 -= sendMoney; break;
+                            case 2: controller.kbUserMoney2 -= sendMoney; break;
+                            case 3: controller.kbUserMoney3 -= sendMoney; break;
+                          }
+
+                          var receiveName = '';
+                          switch (receiveType) {
+                            case 1: controller.kbUserMoney1 += sendMoney; receiveName = '김지호의 통장'; break;
+                            case 2: controller.kbUserMoney2 += sendMoney; receiveName = '가족통장'; break;
+                            case 3: controller.kbUserMoney3 += sendMoney; receiveName = '데이트통장'; break;
+                          }
+
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                  behavior: SnackBarBehavior.floating,
-                                  content: Text('이체 금액이 부족합니다.', style: TextStyle(fontFamily: 'Noto'),)
+                                behavior: SnackBarBehavior.floating,
+                                content: Text('$receiveName으로 ${f.format(sendMoney)}원을 이체하였습니다.', style: TextStyle(fontFamily: 'Noto'),),
                               )
                           );
                           Navigator.pop(context);
-                          return;
-                        }
-
-                        switch (sendType) {
-                          case 1: controller.kbUserMoney1 -= money; break;
-                          case 2: controller.kbUserMoney2 -= money; break;
-                          case 3: controller.kbUserMoney3 -= money; break;
-                        }
-
-                        var receiveName = '';
-                        switch (receiveType) {
-                          case 1: controller.kbUserMoney1 += money; receiveName = '김지호의 통장'; break;
-                          case 2: controller.kbUserMoney2 += money; receiveName = '가족통장'; break;
-                          case 3: controller.kbUserMoney3 += money; receiveName = '데이트통장'; break;
-                        }
-
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                behavior: SnackBarBehavior.floating,
-                                content: Text('$receiveName으로 1,000,000원을 이체하였습니다.', style: TextStyle(fontFamily: 'Noto'),)
-                            )
-                        );
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
+                        },
+                      ),
+                    );
+                  })
                 ],
               ),
             ),
@@ -681,50 +677,48 @@ class KakaoBankUserWidget extends GetView<MainController> {
       );
   }
 
-  Widget itemSendMoney(Alignment alignment, String text, {double padding = 65}) {
+  Widget itemSendMoney(Alignment alignment, String text, int currentMoney, {double padding = 65}) {
     return Container(
       width: double.infinity,
       height: double.infinity,
       alignment: alignment,
       child: RawMaterialButton(
         onPressed: () {
-          
-
           switch (text) {
             case '1': {
-              plus(1);
+              add(1);
               break;
             }
             case '2': {
-              plus(2);
+              add(2);
               break;
             }
             case '3': {
-              plus(3);
+              add(3);
               break;
             }
             case '4': {
-              plus(4);
+              add(4);
               break;
             }
             case '5': {
-              plus(5);
+              add(5);
               break;
             }
             case '6': {
-              plus(6);
+              add(6);
               break;
             }
             case '7': {
-              plus(7);
+              add(7);
               break;
             }
             case '8': {
-              plus(8);
+              add(8);
               break;
             }
             case '9': {
-              plus(9);
+              add(9);
               break;
             }
             case '00': {
@@ -736,11 +730,24 @@ class KakaoBankUserWidget extends GetView<MainController> {
               break;
             }
             case '←': {
-              minus();
+              remove();
               break;
             }
           }
 
+          var money = controller.kbUserMoneySend;
+          print('currentMoney: $currentMoney');
+          if (currentMoney < money) {
+            controller.isMoneyOver = true;
+          } else {
+            controller.isMoneyOver = false;
+          }
+
+          if (money != 0 && !controller.isMoneyOver) {
+            controller.isMoneySend = true;
+          } else {
+            controller.isMoneySend = false;
+          }
 
         },
         child: Text(text, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
@@ -750,13 +757,14 @@ class KakaoBankUserWidget extends GetView<MainController> {
     );
   }
   
-  void plus(int number) {
+  void add(int number) {
     controller.moneyText = true;
     var money = controller.kbUserMoneySend;
     print(money);
-    if (money.toString().length > 15) {
-
+    if (money.toString().length > 14) {
+      print('money.toString().length > 15');
     } else if (money != 0) {
+      print('money != 0');
       money = money * 10 + number;
     } else {
       money = money + number;
@@ -767,17 +775,23 @@ class KakaoBankUserWidget extends GetView<MainController> {
   void multiply(int zero) {
     var money = controller.kbUserMoneySend;
     print(money);
-    if (money == 0) {
+    if (money.toString().length > 14) {
+
+    } else if (money == 0) {
       controller.moneyText = true;
     } else if (zero == 1) {
       money = money * 10;
     } else if (zero == 2) {
-      money = money * 100;
+      if (money.toString().length > 14) {
+        money = money * 10;
+      } else {
+        money = money * 100;
+      }
     }
     controller.kbUserMoneySend = money;
   }
 
-  void minus() {
+  void remove() {
     var money = controller.kbUserMoneySend;
     print(money);
     if (money == 0) {
@@ -785,7 +799,7 @@ class KakaoBankUserWidget extends GetView<MainController> {
     } else if (money.toString().length == 1) {
       money = 0;
     } else {
-      money = (money * 0.1).round();
+      money = money ~/ 10;
     }
     controller.kbUserMoneySend = money;
   }
@@ -800,41 +814,46 @@ class KakaoBankUserWidget extends GetView<MainController> {
     var e;
     var m;
     var w;
-    if (money.toString().length > 12) {
-      j = money.toString().substring(moneyLengh-moneyLengh, moneyLengh-12);
+    if (moneyLengh > 12) {
+      j = money.toString().substring(0, moneyLengh-12);
       e = money.toString().substring(moneyLengh-12, moneyLengh-8);
       m = money.toString().substring(moneyLengh-8, moneyLengh-4);
       w = money.toString().substring(moneyLengh-4, moneyLengh);
       // result = '${moneyFormat(j)}조 ${moneyFormat(e)}억 ${moneyFormat(m)}만 ${moneyFormat(w)}원';
-    } else if (money.toString().length > 8) {
-      e = money.toString().substring(moneyLengh-moneyLengh, moneyLengh-8);
+    } else if (moneyLengh > 8) {
+      e = money.toString().substring(0, moneyLengh-8);
       m = money.toString().substring(moneyLengh-8, moneyLengh-4);
       w = money.toString().substring(moneyLengh-4, moneyLengh);
       // result = '${moneyFormat(e)}억 ${moneyFormat(m)}만 ${moneyFormat(w)}원';
-    } else if (money.toString().length > 4) {
-      m = money.toString().substring(moneyLengh-moneyLengh, moneyLengh-4);
+    } else if (moneyLengh > 4) {
+      m = money.toString().substring(0, moneyLengh-4);
       w = money.toString().substring(moneyLengh-4, moneyLengh);
       // result = '${moneyFormat(m)}만 ${moneyFormat(w)}원';
     } else {
-      w = money.toString().substring(moneyLengh-moneyLengh, moneyLengh);
+      w = money.toString().substring(0, moneyLengh);
       // result = '${moneyFormat(w)}원';
     }
 
-    if (j != null && j != '0') {
+    if (j != null) {
+      print('j: $j');
       result += moneyFormat(j) + '조';
     }
-    if (e != null && e != '0') {
+    if (e != null && e != '0000') {
+      print('e: $e');
       if (result.isNotEmpty) result += ' ';
       result += moneyFormat(e) + '억';
     }
-    if (m != null && m != '0') {
+    if (m != null && m != '0000') {
+      print('m: $m');
       if (result.isNotEmpty) result += ' ';
       result += moneyFormat(m) + '만';
     }
-    if (w != null && w != '0') {
+    if (w != null && w != '0000') {
+      print('w: $w');
       if (result.isNotEmpty) result += ' ';
-      result += moneyFormat(w) + '원';
+      result += moneyFormat(w);
     }
+    result += '원';
 
     print('result: $result');
     return result;

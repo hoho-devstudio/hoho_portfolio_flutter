@@ -139,6 +139,10 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   get isMoneyOver => this._isMoneyOver.value;
   set isMoneyOver(value) => this._isMoneyOver.value = value;
 
+  var _isMoneySend = false.obs;
+  get isMoneySend => this._isMoneySend.value;
+  set isMoneySend(value) => this._isMoneySend.value = value;
+
   @override
   void onInit() {
     scrollerController = ScrollController(
