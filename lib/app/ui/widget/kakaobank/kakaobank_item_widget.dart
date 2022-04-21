@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -241,14 +243,18 @@ class KakaoBankItemWidget extends GetView<MainController> {
                     itemLine(),
                     itemWidget('정기예금', '실시간 이자가 쌓여요', titleType: null, interestType: null, interestColor: true, interestLate: '2.00', month: '12'),
                     itemLine(),
-                    itemWidget('자유적금', '매일/매주/매월 자유롭게', titleType: null, interestType: '최고', interestColor: true, interestLate: '2.40', month: '12'),
+                    Obx(() {
+                      return itemWidget('자유적금', '매일/매주/매월 자유롭게', titleType: null, interestType: '최고', interestColor: true, interestLate: '2.40', month: '12', isGuide: true);
+                    }),
                     itemLine(),
                     itemWidget('26주적금', '캐릭터와 함께 즐거운 도전', titleType: null, interestType: '최고', interestColor: true, interestLate: '2.50', month: '6'),
                     SizedBox(height: 20,),
-                    itemLastWidget(0xff81dcb5, true, '자유적금', '주기도, 금액도 내맘대로 선택', 'kb_item_6.png', 55),
+                    itemLastWidget(1, 0xff81dcb5, true, '자유적금', '주기도, 금액도 내맘대로 선택', 'kb_item_6.png', 55),
                     SizedBox(height: 60,),
                     itemFirstWidget('대출'),
-                    itemWidget('비상금대출', '현금 필요할 때 유용하게', titleType: null, interestType: '최저', interestColor: false, interestLate: '4.63', month: null),
+                    Obx(() {
+                      return itemWidget('비상금대출', '현금 필요할 때 유용하게', titleType: null, interestType: '최저', interestColor: false, interestLate: '4.63', month: null, isGuide: true);
+                    }),
                     itemLine(),
                     itemWidget('마이너스 통장대출', '이자는 사용한 만큼만', titleType: null, interestType: '최저', interestColor: false, interestLate: '3.72', month: null),
                     itemLine(),
@@ -260,7 +266,7 @@ class KakaoBankItemWidget extends GetView<MainController> {
                     itemLine(),
                     itemWidget('주택담보대출', '챗봇과 함께 쉽고 편리하게', titleType: 'NEW', interestType: '최저', interestColor: false, interestLate: '3.01', month: null),
                     SizedBox(height: 20,),
-                    itemLastWidget(0xff57a381, false, '비상금대출', '대출까지 평균 60초!', 'kb_item_7.png', 45),
+                    itemLastWidget(2, 0xff57a381, false, '비상금대출', '대출까지 평균 60초!', 'kb_item_7.png', 45),
                     SizedBox(height: 60,),
                     itemFirstWidget('서비스'),
                     itemWidget('내 신용정보', '내 신용정보를 안전하고 간편하게', titleType: null, interestType: null, interestColor: false, interestLate: null, month: null),
@@ -280,7 +286,7 @@ class KakaoBankItemWidget extends GetView<MainController> {
                     itemLine(),
                     itemWidget('제휴 신용카드', '신청은 간편하게 혜택은 다양하게', titleType: null, interestType: null, interestColor: false, interestLate: null, month: null),
                     SizedBox(height: 20,),
-                    itemLastWidget(0xff57a381, false, '해외주식투자', '테슬라, 스타벅스 천원부터', 'kb_item_8.png', 60),
+                    itemLastWidget(3, 0xff57a381, false, '해외주식투자', '테슬라, 스타벅스 천원부터', 'kb_item_8.png', 60),
                     SizedBox(height: 60,),
                     itemFirstWidget('mini'),
                     itemWidget('카카오뱅크 mini', '10대부터 만들고 용돈을 편하게', titleType: null, interestType: null, interestColor: false, interestLate: null, month: null),
@@ -313,68 +319,73 @@ class KakaoBankItemWidget extends GetView<MainController> {
     );
   }
 
-  Widget itemWidget(String title, String content, {String? titleType, String? interestType, bool interestColor = false, String? interestLate, String? month}) {
-    return TextButton(
-      style: TextButton.styleFrom(primary: Colors.black),
-      onPressed: () {
-        controller.sampleView = true;
-        controller.sampleText = title;
-      },
-      child: Container(
-        padding: EdgeInsets.only(left: 12, right: interestLate != null? 12 : 6, top: 15, bottom: 15),
-        child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                    titleType != null? Container(
-                      margin: EdgeInsets.only(left: 4,top: 3),
-                      padding: EdgeInsets.only(left: 8, right: 7, top: 2, bottom: 2) ,
-                      decoration: BoxDecoration(
-                          color: Color(0xfffa5249),
-                          borderRadius: BorderRadius.circular(12)
-                      ),
-                      child: Text(titleType, style: TextStyle(fontSize: 8, color: Colors.white, fontWeight: FontWeight.bold),),
-                    ) : Container(),
-                  ],
-                ),
-                SizedBox(height: 6,),
-                Text(content, style: TextStyle(fontSize: 12)),
-              ],
-            ),
-            Spacer(),
-            interestLate != null? Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Row(
-                  children: [
-                    interestType != null? Container(
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3) ,
-                      decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12)
-                      ),
-                      child: Text(interestType, style: TextStyle(fontSize: 11, color: interestColor? Color(0xff2a7b5f) : Color(0xff4f6293), fontWeight: FontWeight.bold),),
-                    ) : Container(),
-                    SizedBox(width: 8,),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 2),
-                          child: Text('연', style: TextStyle(fontSize: 14, color: interestColor? Color(0xff2a7b5f) : Color(0xff4f6293), fontWeight: FontWeight.bold)),
+  Widget itemWidget(String title, String content, {String? titleType, String? interestType, bool interestColor = false, String? interestLate, String? month, bool isGuide = false}) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 900),
+      color: isGuide? controller.itemFocus? Colors.grey.withOpacity(0.02) : Colors.white : Colors.white,
+      child: TextButton(
+        // autofocus: isGuide? controller.itemFocus? true : false : false,
+        style: TextButton.styleFrom(primary: Colors.black),
+        onPressed: () {
+          controller.sampleView = true;
+          controller.sampleText = title;
+        },
+        child: Container(
+          padding: EdgeInsets.only(left: 12, right: interestLate != null? 12 : 6, top: 15, bottom: 15),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      titleType != null? Container(
+                        margin: EdgeInsets.only(left: 4,top: 3),
+                        padding: EdgeInsets.only(left: 8, right: 7, top: 2, bottom: 2) ,
+                        decoration: BoxDecoration(
+                            color: Color(0xfffa5249),
+                            borderRadius: BorderRadius.circular(12)
                         ),
-                        Text(' $interestLate%', style: TextStyle(fontSize: 14, color: interestColor? Color(0xff2a7b5f) : Color(0xff4f6293), fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ],
-                ),
-                month != null? Text('$month개월 기준', style: TextStyle(fontSize: 12, color: Colors.grey)) : Container(),
-              ],
-            ) : Icon(Icons.keyboard_arrow_right, color: Colors.grey,)
-          ],
+                        child: Text(titleType, style: TextStyle(fontSize: 8, color: Colors.white, fontWeight: FontWeight.bold),),
+                      ) : Container(),
+                    ],
+                  ),
+                  SizedBox(height: 6,),
+                  Text(content, style: TextStyle(fontSize: 12)),
+                ],
+              ),
+              Spacer(),
+              interestLate != null? Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    children: [
+                      interestType != null? Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3) ,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(12)
+                        ),
+                        child: Text(interestType, style: TextStyle(fontSize: 11, color: interestColor? Color(0xff2a7b5f) : Color(0xff4f6293), fontWeight: FontWeight.bold),),
+                      ) : Container(),
+                      SizedBox(width: 8,),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 2),
+                            child: Text('연', style: TextStyle(fontSize: 14, color: interestColor? Color(0xff2a7b5f) : Color(0xff4f6293), fontWeight: FontWeight.bold)),
+                          ),
+                          Text(' $interestLate%', style: TextStyle(fontSize: 14, color: interestColor? Color(0xff2a7b5f) : Color(0xff4f6293), fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ],
+                  ),
+                  month != null? Text('$month개월 기준', style: TextStyle(fontSize: 12, color: Colors.grey)) : Container(),
+                ],
+              ) : Icon(Icons.keyboard_arrow_right, color: Colors.grey,)
+            ],
+          ),
         ),
       ),
     );
@@ -388,27 +399,66 @@ class KakaoBankItemWidget extends GetView<MainController> {
     );
   }
 
-  Widget itemLastWidget(int color, bool fontColor, String title, String content, String imageName, double imageWidth) {
-    return Container(
-      margin: EdgeInsets.all(20),
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-      decoration: BoxDecoration(
-          color: Color(color),
-          borderRadius: BorderRadius.circular(12)
-      ),
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: TextStyle(fontSize: 10, color: fontColor? Colors.black : Colors.white),),
-              SizedBox(height: 5,),
-              Text(content, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: fontColor? Colors.black : Colors.white),),
-            ],
-          ),
-          Spacer(),
-          Image(image: AssetImage('assets/images/$imageName'), width: imageWidth,)
-        ],
+  Widget itemLastWidget(int type, int color, bool fontColor, String title, String content, String imageName, double imageWidth) {
+    return InkWell(
+      onTap: () {
+        if (type == 1 || type == 2) {
+          controller.kbItemScrollController.animateTo(controller.kbPageHeight[type].toDouble(), duration: const Duration(seconds: 1), curve: Curves.ease);
+          int count = 0;
+          Timer.periodic(Duration(milliseconds: 1000), (timer) {
+            if (count == 2) {
+              controller.sampleText = type==1? '자유적금' : '비상금대출';
+              controller.sampleView = true;
+            } else if (count > 2) {
+              timer.cancel();
+            } else {
+              controller.itemFocus = !controller.itemFocus;
+            }
+            count++;
+          });
+        } else if (type == 3) {
+          controller.kbTabController.index = 3;
+          Future.delayed(Duration(milliseconds: 600), () {
+            controller.kbInfoScrollController.animateTo(1560, duration: const Duration(seconds: 1), curve: Curves.ease);
+          });
+          Future.delayed(Duration(milliseconds: 1000), () {
+            int count = 0;
+            Timer.periodic(Duration(milliseconds: 1000), (timer) {
+              if (count == 2) {
+                controller.sampleText = '해외주식 투자';
+                controller.sampleView = true;
+              } else if (count > 2) {
+                timer.cancel();
+              } else {
+                controller.itemFocus = !controller.itemFocus;
+              }
+              count++;
+            });
+          });
+        }
+
+      },
+      child: Container(
+        margin: EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+        decoration: BoxDecoration(
+            color: Color(color),
+            borderRadius: BorderRadius.circular(12)
+        ),
+        child: Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: TextStyle(fontSize: 10, color: fontColor? Colors.black : Colors.white),),
+                SizedBox(height: 5,),
+                Text(content, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: fontColor? Colors.black : Colors.white),),
+              ],
+            ),
+            Spacer(),
+            Image(image: AssetImage('assets/images/$imageName'), width: imageWidth,)
+          ],
+        ),
       ),
     );
   }

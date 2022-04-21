@@ -153,6 +153,10 @@ class MainController extends GetxController with GetTickerProviderStateMixin{
   get userProgress => this._userProgress.value;
   set userProgress(value) => this._userProgress.value = value;
 
+  var _itemFocus = false.obs;
+  get itemFocus => this._itemFocus.value;
+  set itemFocus(value) => this._itemFocus.value = value;
+
   late BuildContext userContext;
 
   @override

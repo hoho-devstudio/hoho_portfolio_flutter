@@ -97,7 +97,9 @@ class KakaoBankInfoWidget extends GetView<MainController> {
                     itemLine(),
                     SizedBox(height: 20,),
                     itemFirstWidget('제휴서비스'),
-                    itemWidget('해외주식 투자'),
+                    Obx(() {
+                      return itemWidget('해외주식 투자', isGuide: true);
+                    }),
                     itemWidget('증권사 주식계좌', titleType: 'UP'),
                     itemWidget('제휴 신용카드'),
                     SizedBox(height: 20,),
@@ -184,32 +186,36 @@ class KakaoBankInfoWidget extends GetView<MainController> {
     );
   }
 
-  Widget itemWidget(String title, {String? titleType}) {
-    return TextButton(
-      style: TextButton.styleFrom(primary: Colors.black),
-      onPressed: () {
-        controller.sampleView = true;
-        controller.sampleText = title;
-      },
-      child: Container(
-        padding: EdgeInsets.only(left: 12, right: 6, top: 15, bottom: 15),
-        child: Row(
-          children: [
-            Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            titleType != null? Container(
-              margin: EdgeInsets.only(left: 4,top: 5),
-              padding: EdgeInsets.only(left: 8, right: 7, top: 2, bottom: 2) ,
-              decoration: BoxDecoration(
-                  color: Color(0xfffa5249),
-                  borderRadius: BorderRadius.circular(12)
-              ),
-              child: Text(titleType, style: TextStyle(fontSize: 8, color: Colors.white, fontWeight: FontWeight.bold),),
-            ) : Container(),
-            Spacer(),
-            Icon(Icons.keyboard_arrow_right, color: Colors.grey,)
-          ],
-        ),
-      )
+  Widget itemWidget(String title, {String? titleType, bool isGuide = false}) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 900),
+      color: isGuide? controller.itemFocus? Colors.grey.withOpacity(0.02) : Colors.white : Colors.transparent,
+      child: TextButton(
+        style: TextButton.styleFrom(primary: Colors.black),
+        onPressed: () {
+          controller.sampleView = true;
+          controller.sampleText = title;
+        },
+        child: Container(
+          padding: EdgeInsets.only(left: 12, right: 6, top: 15, bottom: 15),
+          child: Row(
+            children: [
+              Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              titleType != null? Container(
+                margin: EdgeInsets.only(left: 4,top: 5),
+                padding: EdgeInsets.only(left: 8, right: 7, top: 2, bottom: 2) ,
+                decoration: BoxDecoration(
+                    color: Color(0xfffa5249),
+                    borderRadius: BorderRadius.circular(12)
+                ),
+                child: Text(titleType, style: TextStyle(fontSize: 8, color: Colors.white, fontWeight: FontWeight.bold),),
+              ) : Container(),
+              Spacer(),
+              Icon(Icons.keyboard_arrow_right, color: Colors.grey,)
+            ],
+          ),
+        )
+      ),
     );
   }
 

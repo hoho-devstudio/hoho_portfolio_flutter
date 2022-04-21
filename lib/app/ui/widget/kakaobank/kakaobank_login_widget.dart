@@ -40,8 +40,10 @@ class KakaoBankLoginWidget extends GetView<MainController> {
                           style: TextButton.styleFrom(primary: Colors.black),
                           onPressed: () {
                             controller.loginProgress = true;
-                            Future.delayed(Duration(milliseconds: 1300), () {
+                            Future.delayed(Duration(milliseconds: 1000), () {
                               controller.loginProgress = false;
+                            });
+                            Future.delayed(Duration(milliseconds: 1300), () {
                               controller.loginView = false;
                             });
                           }, child: Text('로그인', style: TextStyle(color: Colors.black, fontFamily: 'Noto', fontSize: 13, fontWeight: FontWeight.bold),))

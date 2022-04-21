@@ -77,8 +77,8 @@ class KakaoBankWidget extends GetView<MainController> {
                                 Icon(Icons.signal_cellular_alt, size: 16, color: controller.loginView? colorBlack : Colors.white,),
                                 Icon(Icons.battery_charging_full, size: 16, color: controller.loginView? colorBlack : Colors.white,),
                                 // TextButton(onPressed: () {
-                                //   // controller.loginView = true;
-                                //   controller.pushView = !controller.pushView ;
+                                //   controller.loginView = !controller.loginView;
+                                //   // controller.pushView = !controller.pushView;
                                 // }, child: Text('logout', style: TextStyle(color: controller.loginView? colorBlack : Colors.white),))
                               ],
                             ),

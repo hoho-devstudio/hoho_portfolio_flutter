@@ -221,24 +221,48 @@ class KakaoBankUserWidget extends GetView<MainController> {
   }
 
   Widget itemLastWidget(String title, String content, String imageName, double imageWidth) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12)
-      ),
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: TextStyle(fontSize: 16, color: Colors.white),),
-              SizedBox(height: 5,),
-              Text(content, style: TextStyle(fontSize: 12, color: Colors.grey),),
-            ],
-          ),
-          Spacer(),
-          Image(image: AssetImage('assets/images/$imageName'), width: imageWidth,)
-        ],
+    return TextButton(
+      style: TextButton.styleFrom(primary: Colors.black),
+      onPressed: () {
+        controller.kbTabController.index = 1;
+        Future.delayed(Duration(milliseconds: 600), () {
+          controller.kbItemScrollController.animateTo(controller.kbPageHeight[2].toDouble(), duration: const Duration(seconds: 1), curve: Curves.ease);
+        });
+
+        Future.delayed(Duration(milliseconds: 1000), () {
+          int count = 0;
+          Timer.periodic(Duration(milliseconds: 1000), (timer) {
+            if (count == 2) {
+              controller.sampleText = '비상금대출';
+              controller.sampleView = true;
+            } else if (count > 2) {
+              timer.cancel();
+            } else {
+              controller.itemFocus = !controller.itemFocus;
+            }
+            count++;
+          });
+        });
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12)
+        ),
+        child: Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: TextStyle(fontSize: 16, color: Colors.white),),
+                SizedBox(height: 5,),
+                Text(content, style: TextStyle(fontSize: 12, color: Colors.grey),),
+              ],
+            ),
+            Spacer(),
+            Image(image: AssetImage('assets/images/$imageName'), width: imageWidth,)
+          ],
+        ),
       ),
     );
   }
@@ -655,23 +679,6 @@ class KakaoBankUserWidget extends GetView<MainController> {
                         child: Text('다음', style: TextStyle(color: controller.isMoneySend? Colors.black : Colors.grey, fontSize: 16),),
                         onPressed: () {
                           if (!controller.isMoneySend) return;
-
-                          var sendMoney = controller.kbUserMoneySend;
-                          controller.kbUserMoneyPush = sendMoney;
-
-                          switch (sendType) {
-                            case 1: controller.kbUserMoney1 -= sendMoney; break;
-                            case 2: controller.kbUserMoney2 -= sendMoney; break;
-                            case 3: controller.kbUserMoney3 -= sendMoney; break;
-                          }
-
-                          var receiveName = '';
-                          switch (receiveType) {
-                            case 1: controller.kbUserMoney1 += sendMoney; receiveName = '김지호의 통장'; break;
-                            case 2: controller.kbUserMoney2 += sendMoney; receiveName = '가족통장'; break;
-                            case 3: controller.kbUserMoney3 += sendMoney; receiveName = '데이트통장'; break;
-                          }
-
                           Navigator.pop(context);
 
                           controller.userProgress = true;
@@ -679,6 +686,21 @@ class KakaoBankUserWidget extends GetView<MainController> {
                             controller.userProgress = false;
                           });
                           Future.delayed(Duration(milliseconds: 1200), () {
+                            var sendMoney = controller.kbUserMoneySend;
+                            controller.kbUserMoneyPush = sendMoney;
+
+                            switch (sendType) {
+                              case 1: controller.kbUserMoney1 -= sendMoney; break;
+                              case 2: controller.kbUserMoney2 -= sendMoney; break;
+                              case 3: controller.kbUserMoney3 -= sendMoney; break;
+                            }
+
+                            var receiveName = '';
+                            switch (receiveType) {
+                              case 1: controller.kbUserMoney1 += sendMoney; receiveName = '김지호의 통장'; break;
+                              case 2: controller.kbUserMoney2 += sendMoney; receiveName = '가족통장'; break;
+                              case 3: controller.kbUserMoney3 += sendMoney; receiveName = '데이트통장'; break;
+                            }
                             confirmPopup(receiveName, sendMoney);
                           });
                           Future.delayed(Duration(milliseconds: 2200), () {
@@ -687,7 +709,6 @@ class KakaoBankUserWidget extends GetView<MainController> {
                           Future.delayed(Duration(milliseconds: 8000), () {
                             controller.pushView = false;
                           });
-
                         },
                       ),
                     );
